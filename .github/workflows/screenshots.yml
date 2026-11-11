@@ -1,0 +1,34 @@
+name: Capture project screenshots
+
+# Run this by hand from the Actions tab. It screenshots every project homepage,
+# commits the images to public/images/projects and then the site redeploys.
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Re-capture projects that already have a screenshot
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Capture
+        run: npm run screenshots -- ${{ inputs.force && '--force' || '' }}
+      - name: Commit new screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/images/projects
+          git diff --cached --quiet && echo "No new screenshots." || (git commit -m "Add project screenshots" && git push)

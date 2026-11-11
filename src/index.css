@@ -1,0 +1,150 @@
+@import '@fontsource-variable/funnel-display/index.css';
+@import '@fontsource-variable/geist/index.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  DESIGN TOKENS
+  One place for every font, size, radius, colour and shadow. Components only reference these,
+  so changing a value here changes the whole site.
+
+  Light is the default theme. Dark applies when <html data-theme="dark"> is set by the header toggle.
+  Text and control colours meet WCAG 2.1 AA contrast in both themes.
+*/
+:root {
+  /* Typography: Funnel Display for headings, Geist for text (both Google Fonts, self-hosted). */
+  --font-display: 'Funnel Display Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Geist Variable', 'Segoe UI', system-ui, sans-serif;
+  --text-hero: clamp(2.125rem, 4.5vw, 4.25rem);
+  --text-page: clamp(2rem, 4vw, 3.75rem);
+  --text-section: clamp(1.75rem, 3vw, 2.75rem);
+  --text-item: clamp(1.25rem, 1.7vw, 1.5rem);
+  --text-lede: clamp(1.0625rem, 1.3vw, 1.25rem);
+
+  /* Corners */
+  --radius-sm: 0.625rem;   /* inputs, small boxes */
+  --radius: 1rem;          /* cards and inner boxes */
+  --radius-lg: 1.75rem;    /* large panels */
+  --radius-btn: 999px;     /* buttons, chips and tags */
+
+  /* Colours: light theme */
+  color-scheme: light;
+  --bg: #FFFFFF;           /* page background */
+  --bg-alt: #FBF3EA;       /* alternate section background: light skin */
+  --skin-soft: #F6E7D9;    /* icon tiles and small fills */
+  --fg: #16271E;           /* text: near-black green */
+  --muted: #55625A;        /* secondary text */
+  --line: rgba(22, 39, 30, 0.1);   /* very light borders on cards and dividers */
+  --control: #7A867E;      /* borders of inputs and chips (needs 3:1 contrast) */
+  --accent: #1F4D3A;       /* dark green: buttons, links, highlights */
+  --on-accent: #FFFFFF;
+  --skin: #E3B998;         /* skin tone used for small highlights on green */
+  --band: #1B4332;         /* green band and placeholder covers */
+  --band-deep: #12301F;
+  --frame: #173426;        /* browser bar on project previews */
+  --on-frame: #FBF4EC;
+  --danger: #B42318;
+  --focus: #1F4D3A;
+  --shadow-sm: 0 1px 2px rgba(22, 39, 30, 0.06), 0 4px 12px -2px rgba(22, 39, 30, 0.1);
+  --shadow: 0 2px 4px rgba(22, 39, 30, 0.05), 0 16px 36px -12px rgba(22, 39, 30, 0.22);
+  --shadow-lg: 0 4px 8px rgba(22, 39, 30, 0.06), 0 30px 60px -16px rgba(22, 39, 30, 0.32);
+}
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0F1F17;
+  --bg-alt: #152A20;
+  --skin-soft: #21392D;
+  --fg: #F4E6D6;
+  --muted: #C4B8A6;
+  --line: rgba(244, 230, 214, 0.12);
+  --control: #8C9A8F;
+  --accent: #E3B998;       /* skin becomes the accent on dark green */
+  --on-accent: #0F1F17;
+  --skin: #E3B998;
+  --band: #24523F;
+  --band-deep: #1B4332;
+  --frame: #1B3A2B;
+  --on-frame: #FBF4EC;
+  --danger: #FFA29A;
+  --focus: #E3B998;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 10px -2px rgba(0, 0, 0, 0.45);
+  --shadow: 0 2px 4px rgba(0, 0, 0, 0.35), 0 14px 32px -10px rgba(0, 0, 0, 0.65);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.4), 0 28px 56px -14px rgba(0, 0, 0, 0.8);
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-paper font-sans text-ink antialiased; transition: background-color 0.3s, color 0.3s; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+  main:focus { outline: none; }
+  ::selection { background: var(--accent); color: var(--on-accent); }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    body { transition: none; }
+  }
+}
+
+@layer components {
+  /* Section surfaces: base, alternate, and the purple band. */
+  .tone-base { background: var(--bg); color: var(--fg); }
+  .tone-alt { background: var(--bg-alt); color: var(--fg); }
+  .tone-accent { background: var(--band); color: #FBF4EC; --muted: rgba(251, 244, 236, 0.9); --line: rgba(251, 244, 236, 0.4); --focus: #FBF4EC; }
+
+  /* Carousel track: starts on the page margin, runs to the screen edge, scrollbar hidden (buttons and dots replace it). */
+  .carousel-track {
+    --edge: max(clamp(1.25rem, 5vw, 4.5rem), calc((100vw - 90rem) / 2 + 4.5rem));
+    padding-inline: var(--edge);
+    scroll-padding-inline: var(--edge);
+    scrollbar-width: none;
+  }
+  .carousel-track::-webkit-scrollbar { display: none; }
+
+  .band-deep { background: var(--band-deep); }
+  /* Padding that lines full-bleed columns up with the page container. */
+  .bleed-l { padding-left: max(clamp(1.25rem, 5vw, 4.5rem), calc((100vw - 90rem) / 2 + 4.5rem)); }
+  .bleed-r { padding-right: max(clamp(1.25rem, 5vw, 4.5rem), calc((100vw - 90rem) / 2 + 4.5rem)); }
+
+  .container-site { @apply mx-auto w-full max-w-site; padding-inline: clamp(1.25rem, 5vw, 4.5rem); }
+  .section-pad { padding-block: clamp(4.5rem, 9vw, 8.5rem); }
+
+  /* Headings. Sizes come from the type-scale tokens; lines are balanced so headings break evenly. */
+  .display { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.025em; line-height: 1.06; text-wrap: balance; }
+  .h-hero { font-size: var(--text-hero); font-weight: 800; }
+  .h-page { font-size: var(--text-page); }
+  .h-section { font-size: var(--text-section); }
+  .h-item { font-size: var(--text-item); line-height: 1.15; }
+  .lede { font-size: var(--text-lede); line-height: 1.6; }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold no-underline;
+    border: 1.5px solid var(--accent);
+    border-radius: var(--radius-btn);
+  }
+  .btn-solid { @apply bg-accent text-on-accent hover:bg-transparent hover:text-current; }
+  .btn-line { @apply bg-transparent hover:bg-accent hover:text-on-accent; }
+  .tone-accent .btn { border-color: #E3B998; }
+  .tone-accent .btn-solid { background: #E3B998; color: #12301F; }
+  .tone-accent .btn-solid:hover { background: transparent; color: #FBF4EC; }
+
+  /* Shadows and hover lift. Motion is removed for visitors who prefer reduced motion. */
+  .shadow-card { box-shadow: var(--shadow); }
+  .shadow-soft { box-shadow: var(--shadow-sm); }
+  .lift { transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.1, 1), box-shadow 0.35s cubic-bezier(0.2, 0.7, 0.1, 1); }
+  .lift:hover, .lift:focus-within { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+  .btn-solid { box-shadow: var(--shadow-sm); }
+  .btn { transition: transform 0.25s, box-shadow 0.25s, background-color 0.2s, color 0.2s; }
+  .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  @media (prefers-reduced-motion: reduce) {
+    .lift:hover, .lift:focus-within, .btn:hover { transform: none; }
+  }
+
+  .link { @apply underline decoration-accent decoration-2 underline-offset-4 hover:decoration-current; }
+  .label { @apply text-sm text-muted; }
+  .card { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); }
+  .pill { @apply inline-flex items-center gap-2 px-3 py-1 text-sm; border: 1px solid var(--line); border-radius: var(--radius-btn); }
+  .field { @apply w-full bg-paper px-4 py-3 text-base placeholder:text-muted focus:outline-none; border: 1px solid var(--control); border-radius: var(--radius-sm); }
+  .field:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
+  .tag-learning { @apply inline-block bg-accent px-3 py-1 text-sm font-semibold text-on-accent; border-radius: var(--radius-btn); }
+}
