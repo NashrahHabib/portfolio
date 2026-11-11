@@ -26,7 +26,7 @@ function staticFiles(): Plugin {
     name: 'portfolio-static-files',
     apply: 'build',
     generateBundle() {
-      const routes = ['/', '/about', '/portfolio', '/services', '/contact', ...projects.map((p) => `/portfolio/${p.slug}`)];
+      const routes = ['/', '/portfolio', ...projects.map((p) => `/portfolio/${p.slug}`)];
       const urls = routes.map((r) => `  <url><loc>${siteUrl}${r === '/' ? '/' : r}</loc></url>`).join('\n');
       this.emitFile({
         type: 'asset',

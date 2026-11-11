@@ -1,11 +1,8 @@
 import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import Layout from './components/Layout';
 import Home from './pages/Home';
-import About from './pages/About';
 import Portfolio from './pages/Portfolio';
 import ProjectDetail from './pages/ProjectDetail';
-import Services from './pages/Services';
-import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 
 function OldProjectLink() {
@@ -18,14 +15,15 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="about" element={<About />} />
+        {/* About now lives on the homepage. */}
+        <Route path="about" element={<Navigate to={{ pathname: '/', hash: '#about' }} replace />} />
         <Route path="portfolio" element={<Portfolio />} />
         <Route path="portfolio/:slug" element={<ProjectDetail />} />
         {/* Old addresses keep working. */}
         <Route path="work" element={<Navigate to="/portfolio" replace />} />
         <Route path="work/:slug" element={<OldProjectLink />} />
-        <Route path="services" element={<Services />} />
-        <Route path="contact" element={<Contact />} />
+        <Route path="services" element={<Navigate to={{ pathname: '/', hash: '#services' }} replace />} />
+        <Route path="contact" element={<Navigate to={{ pathname: '/', hash: '#contact' }} replace />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

@@ -1,5 +1,6 @@
 import { skillGroups } from '../data/skills';
 import Reveal from './Reveal';
+import FeatureIcon from './FeatureIcon';
 
 /**
  * Skills as a grid of rounded cards. The first group is the filled lead card; the
@@ -21,14 +22,12 @@ export default function SkillGroups() {
           <Reveal
             key={title}
             delay={0.06 * i}
-            className={`${span(i)} ${i === 4 ? 'sm:col-span-2 lg:col-span-2' : ''} lift shadow-soft flex flex-col rounded-box p-6 md:p-7 ${
+            className={`${span(i)} ${i === 4 ? 'sm:col-span-2 lg:col-span-2' : ''} lift spotlight shadow-soft flex flex-col rounded-box p-6 md:p-7 ${
               lead ? 'bg-accent text-on-accent' : 'card'
             }`}
           >
             <div className="flex items-start justify-between gap-4">
-              <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-input ${lead ? 'bg-white/15' : 'bg-skin-soft text-accent'}`}>
-                <Icon size={22} aria-hidden="true" />
-              </span>
+              <FeatureIcon icon={Icon} size={52} onColor={lead} />
               <span className={`text-sm ${lead ? 'opacity-90' : 'text-muted'}`}>
                 {skills.length} {skills.length === 1 ? 'skill' : 'skills'}
               </span>
@@ -57,9 +56,7 @@ export default function SkillGroups() {
           delay={0.3}
           className="flex flex-col gap-5 rounded-box border border-dashed border-accent bg-[color:var(--bg-alt)] p-6 sm:col-span-2 md:flex-row md:items-center md:p-7 lg:col-span-6"
         >
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-input bg-skin-soft text-accent">
-            <Icon size={22} aria-hidden="true" />
-          </span>
+          <FeatureIcon icon={Icon} size={52} />
           <div className="md:w-72 md:shrink-0">
             <span className="tag-learning">{title}</span>
             <p className="mt-2 text-sm text-muted">{summary}</p>

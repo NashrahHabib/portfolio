@@ -1,5 +1,8 @@
-@import '@fontsource-variable/funnel-display/index.css';
-@import '@fontsource-variable/geist/index.css';
+@import '@fontsource/nunito/400.css';
+@import '@fontsource/nunito/600.css';
+@import '@fontsource/nunito/700.css';
+@import '@fontsource/nunito/800.css';
+@import '@fontsource/nunito/900.css';
 
 @tailwind base;
 @tailwind components;
@@ -14,9 +17,16 @@
   Text and control colours meet WCAG 2.1 AA contrast in both themes.
 */
 :root {
-  /* Typography: Funnel Display for headings, Geist for text (both Google Fonts, self-hosted). */
-  --font-display: 'Funnel Display Variable', 'Segoe UI', system-ui, sans-serif;
-  --font-body: 'Geist Variable', 'Segoe UI', system-ui, sans-serif;
+  /* Typography: Nunito throughout (Google Font, self-hosted). Headings use ExtraBold (800). */
+  --font-display: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+
+  /* Headings are pure black (white on dark surfaces). One key word per heading is filled with the
+     brand gradient (written as *word* in the text); --heading-hl is its solid fallback. */
+  --heading: #0B0B0B;
+  --heading-hl: #4338CA;
+  --hl-a: #4338CA;
+  --hl-b: #0369A1;
   --text-hero: clamp(2.125rem, 4.5vw, 4.25rem);
   --text-page: clamp(2rem, 4vw, 3.75rem);
   --text-section: clamp(1.75rem, 3vw, 2.75rem);
@@ -29,46 +39,60 @@
   --radius-lg: 1.75rem;    /* large panels */
   --radius-btn: 999px;     /* buttons, chips and tags */
 
-  /* Colours: light theme */
+  /* Colours: light theme. Palette "Indigo sky". Every colour on the site comes from these tokens. */
   color-scheme: light;
   --bg: #FFFFFF;           /* page background */
-  --bg-alt: #FBF3EA;       /* alternate section background: light skin */
-  --skin-soft: #F6E7D9;    /* icon tiles and small fills */
-  --fg: #16271E;           /* text: near-black green */
-  --muted: #55625A;        /* secondary text */
-  --line: rgba(22, 39, 30, 0.1);   /* very light borders on cards and dividers */
-  --control: #7A867E;      /* borders of inputs and chips (needs 3:1 contrast) */
-  --accent: #1F4D3A;       /* dark green: buttons, links, highlights */
+  --bg-alt: #0C142808;     /* alternate sections: a 3% navy tint over white */
+  --skin-soft: #EEF0FF;    /* chips, tags and small fills: pale indigo */
+  --fg: #141532;           /* body text: deep indigo-navy */
+  --muted: #4A4E6A;        /* secondary text (8:1 on white) */
+  --line: rgba(20, 21, 50, 0.12);
+  --control: #7C7F99;      /* borders of inputs and chips (3:1+) */
+  --accent: #4338CA;       /* links, outlines, solid fills */
   --on-accent: #FFFFFF;
-  --skin: #E3B998;         /* skin tone used for small highlights on green */
-  --band: #1B4332;         /* green band and placeholder covers */
-  --band-deep: #12301F;
-  --frame: #173426;        /* browser bar on project previews */
-  --on-frame: #FBF4EC;
+  --grad-a: #4338CA;       /* brand gradient: indigo ... */
+  --grad-b: #0369A1;       /* ... to sky blue (white text 5.9:1+ along the whole gradient) */
+  --pop: #4F46E5;          /* small highlights on light surfaces: active lines, dots, bars */
+  --pop-soft: rgba(79, 70, 229, 0.14);
+  --skin: #7DD3FC;         /* highlights on dark bands (sky) */
+  --band: #141532;         /* dark bands, footer and placeholder covers */
+  --band-deep: #0D0E24;
+  --band-hl-a: #A5B4FC;    /* gradient words on dark bands */
+  --band-hl-b: #7DD3FC;
+  --frame: #1E2050;        /* browser bar on project previews */
+  --on-frame: #F5F6FF;
   --danger: #B42318;
-  --focus: #1F4D3A;
-  --shadow-sm: 0 1px 2px rgba(22, 39, 30, 0.06), 0 4px 12px -2px rgba(22, 39, 30, 0.1);
-  --shadow: 0 2px 4px rgba(22, 39, 30, 0.05), 0 16px 36px -12px rgba(22, 39, 30, 0.22);
-  --shadow-lg: 0 4px 8px rgba(22, 39, 30, 0.06), 0 30px 60px -16px rgba(22, 39, 30, 0.32);
+  --focus: #4338CA;
+  --shadow-sm: 0 1px 2px rgba(20, 21, 50, 0.06), 0 4px 12px -2px rgba(20, 21, 50, 0.1);
+  --shadow: 0 2px 4px rgba(20, 21, 50, 0.05), 0 16px 36px -12px rgba(20, 21, 50, 0.24);
+  --shadow-lg: 0 4px 8px rgba(20, 21, 50, 0.06), 0 30px 60px -16px rgba(20, 21, 50, 0.34);
 }
 [data-theme='dark'] {
   color-scheme: dark;
-  --bg: #0F1F17;
-  --bg-alt: #152A20;
-  --skin-soft: #21392D;
-  --fg: #F4E6D6;
-  --muted: #C4B8A6;
-  --line: rgba(244, 230, 214, 0.12);
-  --control: #8C9A8F;
-  --accent: #E3B998;       /* skin becomes the accent on dark green */
-  --on-accent: #0F1F17;
-  --skin: #E3B998;
-  --band: #24523F;
-  --band-deep: #1B4332;
-  --frame: #1B3A2B;
-  --on-frame: #FBF4EC;
+  --bg: #0B0C1E;           /* deep indigo page */
+  --bg-alt: #FFFFFF08;     /* 3% white tint over the dark page */
+  --skin-soft: #1C1E45;
+  --fg: #E6E8F5;
+  --muted: #B3B6CC;
+  --line: rgba(230, 232, 245, 0.12);
+  --control: #8A8DA8;
+  --accent: #A5B4FC;       /* light indigo for links and outlines on dark */
+  --on-accent: #FFFFFF;   /* text on the gradient fills */
+  --grad-a: #4F46E5;
+  --grad-b: #0369A1;
+  --pop: #7DD3FC;
+  --pop-soft: rgba(125, 211, 252, 0.16);
+  --skin: #7DD3FC;
+  --band: #121433;
+  --band-deep: #0D0E24;
+  --frame: #1A1C45;
+  --on-frame: #F5F6FF;
   --danger: #FFA29A;
-  --focus: #E3B998;
+  --focus: #A5B4FC;
+  --heading: #FFFFFF;
+  --heading-hl: #A5B4FC;
+  --hl-a: #A5B4FC;
+  --hl-b: #7DD3FC;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 10px -2px rgba(0, 0, 0, 0.45);
   --shadow: 0 2px 4px rgba(0, 0, 0, 0.35), 0 14px 32px -10px rgba(0, 0, 0, 0.65);
   --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.4), 0 28px 56px -14px rgba(0, 0, 0, 0.8);
@@ -84,17 +108,24 @@
     html { scroll-behavior: auto; }
     body { transition: none; }
   }
+
+  /* Smooth scroll (Lenis) takes over wheel scrolling, so the browser's own smoothing is turned off. */
+  html.has-smooth-scroll { scroll-behavior: auto; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+  .lenis.lenis-stopped { overflow: hidden; }
 }
 
 @layer components {
   /* Section surfaces: base, alternate, and the purple band. */
   .tone-base { background: var(--bg); color: var(--fg); }
   .tone-alt { background: var(--bg-alt); color: var(--fg); }
-  .tone-accent { background: var(--band); color: #FBF4EC; --muted: rgba(251, 244, 236, 0.9); --line: rgba(251, 244, 236, 0.4); --focus: #FBF4EC; }
+  .tone-accent { --heading: #FFFFFF; --heading-hl: var(--band-hl-b); --hl-a: var(--band-hl-a); --hl-b: var(--band-hl-b); background: var(--band); color: #F5F6FF; --muted: rgba(245, 246, 255, 0.85); --line: rgba(245, 246, 255, 0.3); --focus: #FFFFFF; }
 
   /* Carousel track: starts on the page margin, runs to the screen edge, scrollbar hidden (buttons and dots replace it). */
   .carousel-track {
-    --edge: max(clamp(1.25rem, 5vw, 4.5rem), calc((100vw - 90rem) / 2 + 4.5rem));
+    --edge: max(clamp(1.25rem, 5vw, 4.5rem), calc((100vw - 80rem) / 2 + 4.5rem));
     padding-inline: var(--edge);
     scroll-padding-inline: var(--edge);
     scrollbar-width: none;
@@ -103,15 +134,21 @@
 
   .band-deep { background: var(--band-deep); }
   /* Padding that lines full-bleed columns up with the page container. */
-  .bleed-l { padding-left: max(clamp(1.25rem, 5vw, 4.5rem), calc((100vw - 90rem) / 2 + 4.5rem)); }
-  .bleed-r { padding-right: max(clamp(1.25rem, 5vw, 4.5rem), calc((100vw - 90rem) / 2 + 4.5rem)); }
+  .bleed-l { padding-left: max(clamp(1.25rem, 5vw, 4.5rem), calc((100vw - 80rem) / 2 + 4.5rem)); }
+  .bleed-r { padding-right: max(clamp(1.25rem, 5vw, 4.5rem), calc((100vw - 80rem) / 2 + 4.5rem)); }
 
   .container-site { @apply mx-auto w-full max-w-site; padding-inline: clamp(1.25rem, 5vw, 4.5rem); }
   .section-pad { padding-block: clamp(4.5rem, 9vw, 8.5rem); }
 
   /* Headings. Sizes come from the type-scale tokens; lines are balanced so headings break evenly. */
-  .display { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.025em; line-height: 1.06; text-wrap: balance; }
-  .h-hero { font-size: var(--text-hero); font-weight: 800; }
+  .display { font-family: var(--font-display); font-weight: 800; color: var(--heading); letter-spacing: -0.02em; line-height: 1.08; text-wrap: balance; }
+  .h-hero { font-size: var(--text-hero); font-weight: 900; }
+  /* The one highlighted word in a heading (written as *word* in the text). */
+  .hl { color: var(--heading-hl); background-image: linear-gradient(120deg, var(--hl-a), var(--hl-b)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  @media (forced-colors: active) { .hl { -webkit-text-fill-color: currentColor; background: none; } }
+  /* Headings on filled accent cards: white on navy (light), black on mustard (dark). */
+  /* Filled accent surfaces (lead cards, tags, the logo, progress bars) use the brand gradient with white text. */
+  .bg-accent { background-image: linear-gradient(120deg, var(--grad-a), var(--grad-b)); --heading: #FFFFFF; --heading-hl: #BAE6FD; --hl-a: #FFFFFF; --hl-b: #BAE6FD; }
   .h-page { font-size: var(--text-page); }
   .h-section { font-size: var(--text-section); }
   .h-item { font-size: var(--text-item); line-height: 1.15; }
@@ -122,11 +159,26 @@
     border: 1.5px solid var(--accent);
     border-radius: var(--radius-btn);
   }
-  .btn-solid { @apply bg-accent text-on-accent hover:bg-transparent hover:text-current; }
-  .btn-line { @apply bg-transparent hover:bg-accent hover:text-on-accent; }
-  .tone-accent .btn { border-color: #E3B998; }
-  .tone-accent .btn-solid { background: #E3B998; color: #12301F; }
-  .tone-accent .btn-solid:hover { background: transparent; color: #FBF4EC; }
+  /* Buttons never move. On hover the colour does the work:
+     - gradient buttons: the gradient travels from left to right (the image is twice as wide and slides right);
+     - outline buttons and carousel arrows: the gradient fills in from the left. */
+  .btn-solid {
+    border-color: transparent; color: #FFFFFF;
+    background-image: linear-gradient(90deg, var(--grad-b), var(--grad-a) 50%, var(--grad-b));
+    background-size: 200% 100%; background-position: 100% 50%;
+  }
+  .btn-solid:hover, .btn-solid:focus-visible { background-position: 0% 50%; }
+  .btn-line, .hover-grad {
+    background-color: transparent; border-color: var(--accent);
+    background-image: linear-gradient(90deg, var(--grad-a), var(--grad-b));
+    background-repeat: no-repeat; background-size: 0% 100%; background-position: left center;
+  }
+  .btn-line:hover, .btn-line:focus-visible, .hover-grad:hover { background-size: 100% 100%; color: #FFFFFF; border-color: transparent; }
+  .hover-grad:disabled, .hover-grad:disabled:hover { background-size: 0% 100%; color: inherit; border-color: var(--control); }
+  .tone-accent .btn { border-color: var(--skin); }
+  .tone-accent .btn-solid { background-image: linear-gradient(90deg, var(--band-hl-b), var(--band-hl-a) 50%, var(--band-hl-b)); color: #141532; }
+  .tone-accent .btn-line { background-image: linear-gradient(90deg, var(--band-hl-a), var(--band-hl-b)); }
+  .tone-accent .btn-line:hover, .tone-accent .btn-line:focus-visible { color: #141532; }
 
   /* Shadows and hover lift. Motion is removed for visitors who prefer reduced motion. */
   .shadow-card { box-shadow: var(--shadow); }
@@ -134,10 +186,86 @@
   .lift { transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.1, 1), box-shadow 0.35s cubic-bezier(0.2, 0.7, 0.1, 1); }
   .lift:hover, .lift:focus-within { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
   .btn-solid { box-shadow: var(--shadow-sm); }
-  .btn { transition: transform 0.25s, box-shadow 0.25s, background-color 0.2s, color 0.2s; }
-  .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .btn:hover { box-shadow: var(--shadow); }
   @media (prefers-reduced-motion: reduce) {
-    .lift:hover, .lift:focus-within, .btn:hover { transform: none; }
+    .lift:hover, .lift:focus-within { transform: none; }
+  }
+
+  /* MOTION. Every effect below is decorative and switched off for reduced motion at the end. */
+
+  /* Buttons: only colour changes on hover (see the button rules above). */
+  .btn, .hover-grad {
+    background-origin: border-box;
+    position: relative;
+    transition: box-shadow 0.25s, background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1), background-size 0.5s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s, border-color 0.3s;
+  }
+
+  /* Cards: a soft light follows the cursor (--sx / --sy are set by PointerEffects). */
+  .spotlight { position: relative; isolation: isolate; }
+  .spotlight::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 1; opacity: 0;
+    background: radial-gradient(420px circle at var(--sx, 50%) var(--sy, 50%), color-mix(in srgb, var(--skin) 32%, transparent), transparent 65%);
+    transition: opacity 0.4s;
+  }
+  .spotlight:hover::before { opacity: 1; }
+
+  /* 3D tilt towards the cursor (--rx / --ry are set by PointerEffects). */
+  [data-tilt] { transform: perspective(1400px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform; }
+
+  /* Navigation underline that slides in from the left. */
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: var(--accent);
+    transform: scaleX(0); transform-origin: right; transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .nav-link:hover::after, .nav-link[aria-current='page']::after { transform: scaleX(1); transform-origin: left; }
+
+  /* Film grain over coloured bands, for depth. */
+  .grain { position: relative; isolation: isolate; }
+  .grain::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.09; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .grain > * { position: relative; z-index: 1; }
+
+  /* Slow floating glows behind the hero. */
+  @keyframes orb-drift {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(-24px, 18px, 0) scale(1.08); }
+  }
+  .orb { position: absolute; border-radius: 999px; filter: blur(60px); pointer-events: none; animation: orb-drift 12s ease-in-out infinite; }
+  [data-theme='dark'] .orb { opacity: 0.1 !important; }
+
+  /* Custom cursor (PointerEffects): the dot and ring replace the system cursor, except in text fields. */
+  html.has-custom-cursor, html.has-custom-cursor * { cursor: none !important; }
+  html.has-custom-cursor :is(input:not([type='checkbox']):not([type='radio']):not([type='submit']):not([type='button']), textarea, [contenteditable='true']) { cursor: text !important; }
+
+  /* Hero orbit (HeroOrbit): rings turn; each logo counter-turns at the same speed to stay upright. */
+  @keyframes orbit-spin { to { rotate: 360deg; } }
+  .orbit-ring { animation: orbit-spin var(--orbit-duration, 50s) linear infinite; }
+  .orbit-ring .orbit-upright { animation: orbit-spin var(--orbit-duration, 50s) linear infinite reverse; }
+  .orbit-reverse, .orbit-reverse .orbit-upright { animation-direction: reverse; }
+  .orbit-reverse .orbit-upright { animation-direction: normal; }
+
+  /* Endless logo rows (StackMarquee). Each track holds one full list; two tracks side by side loop seamlessly. */
+  @keyframes marquee-x { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+  .marquee-track { animation: marquee-x 55s linear infinite; }
+  .marquee-reverse { animation-direction: reverse; }
+  .marquee:hover .marquee-track, .marquee:focus-within .marquee-track { animation-play-state: paused; }
+
+  /* "Scroll" hint: a dot that drops down a short track. */
+  @keyframes scroll-dot { 0% { transform: translateY(0); opacity: 1; } 80%, 100% { transform: translateY(14px); opacity: 0; } }
+  .scroll-dot { animation: scroll-dot 1.8s ease-in-out infinite; }
+
+
+  @media (prefers-reduced-motion: reduce) {
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spotlight::before { display: none; }
+    .btn, .hover-grad { transition: none; }
+    [data-tilt] { transform: none !important; }
+    .orb, .scroll-dot, .marquee-track, .orbit-ring, .orbit-ring .orbit-upright { animation: none; }
   }
 
   .link { @apply underline decoration-accent decoration-2 underline-offset-4 hover:decoration-current; }

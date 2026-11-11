@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { LayoutGrid, List, Search, X } from 'lucide-react';
-import { CATEGORIES, projects } from '../data/projects';
+import { CATEGORIES, COMPANIES, projects } from '../data/projects';
 import { useSeo } from '../lib/seo';
 import PageHeader from '../components/PageHeader';
 import ProjectCard from '../components/ProjectCard';
@@ -21,19 +22,27 @@ export default function Portfolio() {
     [],
   );
 
+  const [company, setCompany] = useState('All');
+  const companies = useMemo(
+    () => COMPANIES.map((c) => ({ name: c, count: projects.filter((p) => p.company === c).length })).filter((c) => c.count > 0),
+    [],
+  );
+
   const results = useMemo(() => {
     const term = query.trim().toLowerCase();
     return projects.filter(
       (p) =>
         (category === 'All' || p.category === category) &&
+        (company === 'All' || p.company === company) &&
         (!term || p.name.toLowerCase().includes(term) || p.url.toLowerCase().includes(term)),
     );
-  }, [query, category]);
+  }, [query, category, company]);
 
-  const filtered = query !== '' || category !== 'All';
+  const filtered = query !== '' || category !== 'All' || company !== 'All';
   const clear = () => {
     setQuery('');
     setCategory('All');
+    setCompany('All');
   };
 
   const chip = (active: boolean) =>
@@ -41,8 +50,8 @@ export default function Portfolio() {
 
   return (
     <>
-      <PageHeader title="Portfolio">
-        <p>Selected websites I’ve designed and custom coded. Search by name or filter by category.</p>
+      <PageHeader title="Portfolio*.*">
+        <p>Selected websites I’ve designed and custom coded. Search by name, or filter by category or company.</p>
       </PageHeader>
 
       <section className="tone-alt pb-24 pt-12">
@@ -72,6 +81,18 @@ export default function Portfolio() {
                 </button>
                 {categories.map((c) => (
                   <button key={c.name} type="button" className={chip(category === c.name)} aria-pressed={category === c.name} onClick={() => setCategory(c.name)}>
+                    {c.name} <span className="opacity-70">{c.count}</span>
+                  </button>
+                ))}
+              </div>
+
+              <p className="label mt-5" id="company-label">Company</p>
+              <div className="mt-2 flex flex-wrap gap-2" role="group" aria-labelledby="company-label">
+                <button type="button" className={chip(company === 'All')} aria-pressed={company === 'All'} onClick={() => setCompany('All')}>
+                  All <span className="opacity-70">{projects.length}</span>
+                </button>
+                {companies.map((c) => (
+                  <button key={c.name} type="button" className={chip(company === c.name)} aria-pressed={company === c.name} onClick={() => setCompany(c.name)}>
                     {c.name} <span className="opacity-70">{c.count}</span>
                   </button>
                 ))}
@@ -108,7 +129,9 @@ export default function Portfolio() {
             </div>
           ) : view === 'grid' ? (
             <ul className="mt-10 grid gap-x-10 gap-y-16 sm:grid-cols-2">
-              {results.map((p) => <ProjectCard key={p.id} project={p} view="grid" />)}
+              <AnimatePresence mode="popLayout">
+                {results.map((p) => <ProjectCard key={p.id} project={p} view="grid" />)}
+              </AnimatePresence>
             </ul>
           ) : (
             <ul className="mt-2">

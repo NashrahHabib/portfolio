@@ -15,7 +15,7 @@ export function useTheme() {
   useEffect(() => {
     if (theme === 'dark') document.documentElement.dataset.theme = 'dark';
     else delete document.documentElement.dataset.theme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0F1F17' : '#FBF4EC');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0B0C1E' : '#FFFFFF');
     try {
       localStorage.setItem(KEY, theme);
     } catch {
@@ -25,4 +25,15 @@ export function useTheme() {
 
   const toggle = useCallback(() => setTheme((t) => (t === 'dark' ? 'light' : 'dark')), []);
   return { theme, toggle };
+}
+
+/** Read-only: the current theme, updated whenever the header toggle changes it. */
+export function useCurrentTheme(): Theme {
+  const [theme, setTheme] = useState<Theme>(current);
+  useEffect(() => {
+    const observer = new MutationObserver(() => setTheme(current()));
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
+  return theme;
 }

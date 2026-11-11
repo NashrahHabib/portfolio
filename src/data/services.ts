@@ -30,7 +30,7 @@ export const services: Service[] = [
     id: 'maintenance',
     title: 'Website Maintenance',
     summary: 'Keeping existing sites healthy: fixing what breaks, moving sites safely and making them faster.',
-    items: ['Troubleshooting', 'Website migration', 'Performance optimisation', 'Security hardening', 'Technical SEO'],
+    items: ['Troubleshooting', 'Website migration', 'Performance optimisation', 'Security hardening', 'Technical SEO', 'Page indexing in Google Search Console'],
   },
   {
     id: 'emerging',
@@ -39,15 +39,4 @@ export const services: Service[] = [
     items: ['Python automation', 'AI API integration', 'AI chatbot development concepts'],
     emerging: true,
   },
-];
-
-/** Homepage services preview, in display order. */
-export const servicesPreview: { title: string; summary: string; emerging?: boolean }[] = [
-  { title: 'Custom WordPress Development', summary: 'Features and templates written for the project, so the site does what the design promised.' },
-  { title: 'WordPress Theme Development', summary: 'Themes built from your design, with sections clients can edit.' },
-  { title: 'WooCommerce Development', summary: 'Stores, product pages, shipping and payments.' },
-  { title: 'Shopify Development', summary: 'Store setup, product pages and configuration.' },
-  { title: 'Website Maintenance', summary: 'Troubleshooting, migrations and security hardening.' },
-  { title: 'Performance Optimisation', summary: 'Faster pages through image, asset and caching work.' },
-  { title: 'AI & API Integration', summary: 'Connecting sites to APIs and AI services. An area I’m growing into.', emerging: true },
 ];

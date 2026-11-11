@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from 'lucide-react';
 import { displayUrl, findProject, neighbours, visitLabel } from '../lib/projects';
 import { useSeo } from '../lib/seo';
 import ProjectFrame from '../components/ProjectFrame';
@@ -20,7 +20,7 @@ function Detail({ project }: { project: NonNullable<ReturnType<typeof findProjec
 
   const { previous, next } = neighbours(project);
   const gallery = project.gallery ?? [];
-  const hasNotes = project.description || project.contribution || project.technologies?.length;
+  const hasNotes = project.description || project.contribution || project.work?.length || project.technologies?.length;
 
   return (
     <article>
@@ -56,6 +56,29 @@ function Detail({ project }: { project: NonNullable<ReturnType<typeof findProjec
               <dt className="label">Industry</dt>
               <dd className="mt-1">{project.category}</dd>
             </div>
+            {project.company && (
+              <div>
+                <dt className="label">Delivered with</dt>
+                <dd className="mt-1 inline-flex items-center gap-2 font-bold">
+                  <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[color:var(--pop)]" />
+                  {project.company === 'Freelance' ? 'Freelance project' : project.company}
+                </dd>
+              </div>
+            )}
+            {project.work && project.work.length > 0 && (
+              <div>
+                <dt className="label">Work I did</dt>
+                <dd className="mt-2">
+                  <ul className="flex flex-wrap gap-2">
+                    {project.work.map((w) => (
+                      <li key={w} className="inline-flex items-center gap-1.5 rounded-btn border border-line bg-paper px-3 py-1 text-sm font-semibold">
+                        <Check size={14} aria-hidden="true" className="text-[color:var(--heading-hl)]" /> {w}
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            )}
             {project.description && (
               <div>
                 <dt className="label">Overview</dt>

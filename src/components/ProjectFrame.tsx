@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import type { Project } from '../data/projects';
 import { asset, displayUrl } from '../lib/projects';
+import { ease, prefersReducedMotion } from '../lib/motion';
 
 interface Props {
   project: Project;
@@ -20,8 +22,14 @@ export default function ProjectFrame({ project, src, eager, className = '' }: Pr
   const image = src ?? project.image;
   const showImage = Boolean(image) && !failed;
 
+  // The screenshot settles from a slight zoom to its normal size as the frame scrolls into view.
+  const frame = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: frame, offset: ['start end', 'center center'] });
+  const still = prefersReducedMotion();
+  const zoom = useTransform(scrollYProgress, [0, 1], still ? [1, 1] : [1.14, 1]);
+
   return (
-    <div className={`overflow-hidden rounded-box border border-line bg-frame text-on-frame ${className}`}>
+    <div ref={frame} className={`relative overflow-hidden rounded-box border border-line bg-frame text-on-frame ${className}`}>
       <div className="flex items-center gap-1.5 border-b border-white/15 px-3 py-2" aria-hidden="true">
         <span className="h-2 w-2 rounded-full bg-white/30" />
         <span className="h-2 w-2 rounded-full bg-white/30" />
@@ -30,18 +38,28 @@ export default function ProjectFrame({ project, src, eager, className = '' }: Pr
       </div>
       <div className="relative aspect-[16/10] [container-type:inline-size]">
         {showImage ? (
-          <img
-            src={asset(image!)}
-            alt={`Screenshot of the ${project.name} website`}
-            loading={eager ? 'eager' : 'lazy'}
-            decoding="async"
-            onError={() => setFailed(true)}
-            className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
-          />
+          <motion.div
+            className="absolute inset-0 overflow-hidden"
+            initial={still ? false : { clipPath: 'inset(100% 0% 0% 0%)' }}
+            whileInView={{ clipPath: 'inset(0% 0% 0% 0%)' }}
+            viewport={{ once: true, margin: '0px 0px -8% 0px' }}
+            transition={{ duration: 1.1, ease: ease.inOut }}
+          >
+            <motion.div className="h-full w-full origin-top" style={{ scale: zoom }}>
+              <img
+                src={asset(image!)}
+                alt={`Screenshot of the ${project.name} website`}
+                loading={eager ? 'eager' : 'lazy'}
+                decoding="async"
+                onError={() => setFailed(true)}
+                className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              />
+            </motion.div>
+          </motion.div>
         ) : (
           /* Placeholder cover: an abstract page outline with the project name. Sizes use
              container units so it scales from small cards to the large featured frame. */
-          <div className="absolute inset-0 overflow-hidden bg-[color:var(--band)] text-white">
+          <div className="absolute inset-0 overflow-hidden bg-[color:var(--band)] text-white [--heading:#FFFFFF]">
             <span aria-hidden="true" className="display absolute -bottom-[16cqw] right-[2cqw] text-[58cqw] leading-none text-white/10">
               {project.name.replace(/^the\s+/i, '').charAt(0).toUpperCase()}
             </span>

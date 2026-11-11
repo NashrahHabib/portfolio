@@ -20,7 +20,7 @@ export default {
       },
       fontFamily: { sans: ['var(--font-body)'], display: ['var(--font-display)'] },
       borderRadius: { box: 'var(--radius)', panel: 'var(--radius-lg)', btn: 'var(--radius-btn)', input: 'var(--radius-sm)' },
-      maxWidth: { site: '90rem' },
+      maxWidth: { site: '80rem' }, // 1280px
     },
   },
   plugins: [],

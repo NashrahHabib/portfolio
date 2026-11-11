@@ -20,24 +20,14 @@ export const site = {
 
 export const nav = [
   { label: 'Home', to: '/' },
-  { label: 'About', to: '/about' },
+  { label: 'About', to: '/#about' },
   { label: 'Portfolio', to: '/portfolio' },
-  { label: 'Services', to: '/services' },
-  { label: 'Contact', to: '/contact' },
+  { label: 'Services', to: '/#services' },
+  { label: 'Contact', to: '/#contact' },
 ];
 
 export const stats = [
   { value: '4+', label: 'Years Experience' },
   { value: '200+', label: 'Websites Built & Managed' },
   { value: 'USA, UK, Europe', label: 'International Client Experience' },
-];
-
-export const experience = [
-  { period: 'May 2026 – Present', company: 'Vision Craft Technologies', role: 'WordPress Developer', note: 'Contracted to HjemmesideHelten, Norway.' },
-  { period: 'January 2025 – June 2026', company: 'SMCSE Solutions', role: 'WordPress Developer', note: '' },
-  { period: 'October 2021 – May 2023', company: 'SMCSE Solutions', role: 'WordPress Developer', note: '' },
-];
-
-export const education = [
-  { period: '2015 – 2019', title: 'BS Computer Science', place: 'Lahore College for Women University' },
 ];
