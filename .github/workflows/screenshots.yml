@@ -5,6 +5,10 @@ name: Capture project screenshots
 on:
   workflow_dispatch:
     inputs:
+      projects:
+        description: Only these projects, by slug, separated by spaces (e.g. the-broadway-legacy-foundation). Leave empty for all.
+        type: string
+        default: ''
       force:
         description: Re-capture projects that already have a screenshot
         type: boolean
@@ -25,7 +29,9 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - name: Capture
-        run: npm run screenshots -- ${{ inputs.force && '--force' || '' }}
+        env:
+          ONLY: ${{ inputs.projects }}
+        run: npm run screenshots -- ${{ inputs.force && '--force' || '' }} $ONLY
       - name: Commit new screenshots
         run: |
           git config user.name "github-actions[bot]"
