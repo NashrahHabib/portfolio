@@ -3,12 +3,14 @@
  *
  * Brand logos come from Simple Icons (simpleicons.org): import the `si…` name, for example
  * `siCloudflare`, and set it as `logo`. For things that are not a brand (migration, shipping)
- * or brands Simple Icons does not carry (ChatGPT, Rank Math), use a lucide icon as `icon`.
+ * or brands Simple Icons does not carry, put the official logo file in public/images/logos and set
+ * `image` (add `fill: true` for square app icons that bring their own background), or use a
+ * lucide icon as `icon`.
  * Only list tools you actually use; `learning: true` labels a tool as "Learning".
  */
 import type { LucideIcon } from 'lucide-react';
 import {
-  ArrowRightLeft, Blocks, Bot, Code2, DatabaseBackup, Droplets, FileCode2, Gauge, Image, Link2, LineChart, ListTree, Server, ShoppingCart, SquareTerminal, Truck, UploadCloud, Zap,
+  ArrowRightLeft, Code2, DatabaseBackup, Droplets, Gauge, Image, Link2, Server, ShoppingCart, SquareTerminal, Truck, UploadCloud,
 } from 'lucide-react';
 import {
   siClaude, siCss, siElementor, siFastapi, siFigma, siGit, siGithub, siGoogleanalytics, siGooglesearchconsole, siGoogletagmanager, siGutenberg,
@@ -23,6 +25,10 @@ export interface StackItem {
   note: string;
   logo?: BrandLogo;
   icon?: LucideIcon;
+  /** An official logo file in /public, e.g. '/images/logos/acf.svg'. */
+  image?: string;
+  /** The image is a square app icon with its own background: let it fill the whole tile. */
+  fill?: boolean;
   /** Enlarges wide logos (wordmarks) so they fill the tile like square ones. */
   scale?: number;
   learning?: boolean;
@@ -46,8 +52,8 @@ export const stackGroups: StackGroup[] = [
       { name: 'WordPress', note: 'Custom themes and plugins', logo: siWordpress },
       { name: 'Gutenberg', note: 'Custom blocks and patterns', logo: siGutenberg },
       { name: 'Elementor', note: 'Page builds and templates', logo: siElementor },
-      { name: 'ACF', note: 'Advanced Custom Fields', icon: Blocks },
-      { name: 'Secure Custom Fields', note: 'SCF fields and option pages', icon: ListTree },
+      { name: 'ACF', note: 'Advanced Custom Fields', image: '/images/logos/acf.svg', fill: true },
+      { name: 'Secure Custom Fields', note: 'SCF fields and option pages', image: '/images/logos/scf.svg', fill: true },
     ],
   },
   {
@@ -76,7 +82,7 @@ export const stackGroups: StackGroup[] = [
       { name: 'HTML5', note: 'Semantic, accessible markup', logo: siHtml5 },
       { name: 'CSS', note: 'Responsive layouts', logo: siCss },
       { name: 'Custom code', note: 'Features written for the project', icon: Code2 },
-      { name: 'VS Code', note: 'Where the code gets written', icon: FileCode2 },
+      { name: 'VS Code', note: 'Where the code gets written', image: '/images/logos/vscode.svg' },
     ],
   },
   {
@@ -103,8 +109,8 @@ export const stackGroups: StackGroup[] = [
       { name: 'Google Search Console', note: 'Page indexing and search health', logo: siGooglesearchconsole },
       { name: 'Google Analytics', note: 'Traffic and goals', logo: siGoogleanalytics },
       { name: 'Google Tag Manager', note: 'Tracking tags without code changes', logo: siGoogletagmanager },
-      { name: 'LiteSpeed Cache', note: 'Page caching and speed tuning', icon: Zap },
-      { name: 'Rank Math', note: 'On-page SEO', icon: LineChart },
+      { name: 'LiteSpeed Cache', note: 'Page caching and speed tuning', image: '/images/logos/litespeed-cache.png', fill: true },
+      { name: 'Rank Math', note: 'On-page SEO', image: '/images/logos/rank-math.svg', fill: true },
       { name: 'Performance', note: 'Caching and Core Web Vitals', icon: Gauge },
       { name: 'WebP images', note: 'Lighter, faster images', icon: Image },
       { name: '301 redirects', note: 'Keeping rankings after changes', icon: Link2 },
@@ -117,7 +123,7 @@ export const stackGroups: StackGroup[] = [
     items: [
       { name: 'Figma', note: 'Designs ready to build', logo: siFigma },
       { name: 'Claude', note: 'AI-assisted coding and QA', logo: siClaude },
-      { name: 'ChatGPT', note: 'Drafting and problem solving', icon: Bot },
+      { name: 'ChatGPT', note: 'Drafting and problem solving', image: '/images/logos/openai.svg' },
       { name: 'Python', note: 'Automation and scripts', logo: siPython, learning: true },
       { name: 'FastAPI', note: 'APIs in Python', logo: siFastapi, learning: true },
     ],
