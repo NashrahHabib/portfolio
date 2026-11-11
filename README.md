@@ -64,6 +64,7 @@ npx playwright install chromium   # first time only
 npm run screenshots               # captures every website that has no screenshot yet
 npm run screenshots -- --force    # re-captures everything
 npm run screenshots -- yuki-shrimp clever-nurse   # only these projects
+SHOT_CHANNEL=chrome npm run screenshots          # use your installed Google Chrome
 ```
 
 Or run it on GitHub with nothing installed locally: open the repository's Actions tab, choose "Capture project screenshots" and press "Run workflow". It commits the images and the site redeploys. Look through the results afterwards, because cookie banners, redirects and error pages get captured too. Replace any bad one with your own 1440 × 900 image of the same file name.

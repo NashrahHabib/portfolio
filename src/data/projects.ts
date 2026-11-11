@@ -96,7 +96,7 @@ const entries: ProjectInput[] = [
   { name: 'Northeastern MN', url: 'https://northeasternmn.com/' },
   { name: 'Enhancing Massage', url: 'https://enhancingmassage.com/' },
   { name: 'My Therapeutic Edge', url: 'https://mytherapeuticedge.com/' },
-  { name: 'PFM Fleet Service', url: 'https://www.pfmfleetservice.com/' },
+  { name: 'PFM Fleet Service', url: 'https://www.pfmfleetservice.com/', category: 'Automotive', featured: true },
   { name: 'SMCSE Consulting', url: 'https://smcseconsulting.com/' },
   { name: 'CG Squad', url: 'https://cgsquad.co.uk/' },
   { name: 'Premium Pirate', url: 'https://premiumpirate.com/' },
@@ -121,9 +121,9 @@ const entries: ProjectInput[] = [
     technologies: WP_ELEMENTOR,
   },
   { name: 'cnamac.com', url: 'https://cnamac.com/' },
-  { name: 'River City Stump Removal', url: 'https://rivercitystumpremoval.com/' },
+  { name: 'River City Stump Removal', url: 'https://rivercitystumpremoval.com/', featured: true },
   {
-    name: 'Hornsby Business Advisory', url: 'https://hornsbyadvisory.com/', category: 'Business Consulting', featured: true,
+    name: 'Hornsby Business Advisory', url: 'https://hornsbyadvisory.com/', category: 'Business Consulting',
     description: 'Website for a leadership advisory firm that works with executive teams on alignment, leadership development and execution.',
     technologies: WP_ELEMENTOR,
   },
@@ -132,7 +132,7 @@ const entries: ProjectInput[] = [
   { name: 'Coolax USA', url: 'https://coolaxusa.com/' },
   { name: 'shiftsixos.com', url: 'https://shiftsixos.com/' },
   { name: '360 Vision Builds', url: 'https://360visionbuilds.com/' },
-  { name: 'u-sens.com', url: 'https://u-sens.com/' },
+  { name: 'U-sens', url: 'https://u-sens.com/', category: 'Engineering & Construction', featured: true },
   {
     name: 'Shulin Lake Resort', url: 'https://www.shulinlakeresort.com/', category: 'Travel & Hospitality', featured: true,
     description: 'Website for an all-inclusive wilderness lodge near Denali, Alaska, covering accommodation, fishing and adventure trips, and weddings.',
@@ -149,7 +149,7 @@ const entries: ProjectInput[] = [
   { name: 'cttib.com', url: 'https://cttib.com/' },
   { name: 'pcs.care', url: 'https://www.pcs.care/' },
   {
-    name: 'The Broadway Legacy Foundation', url: 'https://thebroadwaylegacyfoundation.org/', category: 'Nonprofit', featured: true,
+    name: 'The Broadway Legacy Foundation', url: 'https://thebroadwaylegacyfoundation.org/', category: 'Nonprofit',
     description: 'Website for a New York nonprofit that works with the Museum of Broadway on theatre education, special exhibits and arts advocacy.',
     technologies: WP_ELEMENTOR,
   },
@@ -165,6 +165,9 @@ const entries: ProjectInput[] = [
   { name: 'Elite Imaging', url: 'http://eliteimaging.com/' },
   { name: 'Provantage Capital', url: 'https://www.provantagecapital.com/' },
   { name: 'rhrenoman.com', url: 'https://rhrenoman.com/' },
+  { name: 'AGPUS', url: 'https://agpus.org/', category: 'Nonprofit', featured: true },
+  { name: 'CWNB', url: 'https://cwnbny.com/', category: 'E-commerce', featured: true },
+  { name: 'Shop Nicotech', url: 'https://shopnicotech.com/', category: 'E-commerce', featured: true },
   {
     name: 'Browse Botswana', url: 'https://browsebotswana.com/', category: 'Directory & Marketplace', featured: true,
     description: 'Listings platform for Botswana with classifieds, events, services and stays, plus a multi-vendor marketplace.',

@@ -9,7 +9,7 @@
  *
  * First run only: npx playwright install chromium
  */
-import { existsSync, mkdirSync, readdirSync } from 'node:fs';
+import { mkdirSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { chromium, type Page } from 'playwright';
 import { projects } from '../src/data/projects';
@@ -37,6 +37,34 @@ const HIDE_OVERLAYS = `
   { display: none !important; visibility: hidden !important; }
   html, body { overflow: auto !important; }
 `;
+
+/**
+ * Runs in the page: hides floating layers (age checks, newsletter sign-ups, cookie notices)
+ * and the dimmed backdrops behind them, which class-name selectors cannot always catch.
+ */
+function hidePopups() {
+  const POPUP_TEXT = /confirm your age|are you (18|21)|years old or older|age verification|sign up and save|subscribe|newsletter|cookies?\b|consent|install app|add to home screen/i;
+  const MODAL_CLASS = /modal|overlay|backdrop|popup|lightbox|dialog/i;
+  const viewport = window.innerWidth * window.innerHeight;
+  for (const el of Array.from(document.body.querySelectorAll<HTMLElement>('*'))) {
+    const style = getComputedStyle(el);
+    if (style.position !== 'fixed' || style.display === 'none') continue;
+    const rect = el.getBoundingClientRect();
+    const area = rect.width * rect.height;
+    if (area === 0) continue;
+    const isHeader = rect.top <= 0 && rect.height < window.innerHeight * 0.3;
+    // Some sites wrap the whole page in a fixed scroll container, so large layers only count
+    // when they are also named like a modal.
+    const modalNamed = MODAL_CLASS.test(String(el.className)) || MODAL_CLASS.test(el.tagName);
+    const looksLikePopup = POPUP_TEXT.test(el.innerText || '') && !isHeader && (area < viewport * 0.7 || modalNamed);
+    const isBackdrop = area > viewport * 0.6 && modalNamed;
+    if (looksLikePopup || isBackdrop) el.style.setProperty('display', 'none', 'important');
+  }
+  for (const el of [document.documentElement, document.body]) {
+    el.style.setProperty('overflow', 'auto', 'important');
+    el.style.setProperty('filter', 'none', 'important');
+  }
+}
 
 /** Waits until the page's hero content has actually loaded, not just the HTML. */
 async function settle(page: Page) {
@@ -75,11 +103,16 @@ async function settle(page: Page) {
   }
 
   await page.addStyleTag({ content: HIDE_OVERLAYS }).catch(() => {});
+  await page.evaluate(hidePopups).catch(() => {});
   await page.waitForTimeout(3000); // fonts, sliders and fade-in animations
 }
 
 const targets = projects.filter((p) => p.kind === 'website' && (only.length === 0 || only.includes(p.slug)));
-const browser = await chromium.launch({ args: ['--autoplay-policy=no-user-gesture-required'] });
+// SHOT_CHANNEL=chrome uses your installed Google Chrome instead of Playwright's own browser download.
+const browser = await chromium.launch({
+  channel: process.env.SHOT_CHANNEL || undefined,
+  args: ['--autoplay-policy=no-user-gesture-required'],
+});
 const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, locale: 'en-US' });
 const failed: string[] = [];
 let captured = 0;
@@ -98,7 +131,9 @@ for (const project of targets) {
 
   const page = await context.newPage();
   try {
-    await page.goto(project.url, { waitUntil: 'load', timeout });
+    // Wait for the HTML first; a single stuck resource should not stop the shot.
+    await page.goto(project.url, { waitUntil: 'domcontentloaded', timeout });
+    await page.waitForLoadState('load', { timeout: 60000 }).catch(() => {});
     await settle(page);
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(500);
