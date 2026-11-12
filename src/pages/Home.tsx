@@ -8,8 +8,7 @@ import { useSeo } from '../lib/seo';
 import ContactBand from '../components/ContactBand';
 import ProjectHoverList from '../components/ProjectHoverList';
 import Reveal from '../components/Reveal';
-import WhyChooseMe from '../components/WhyChooseMe';
-import StackEditor from '../components/StackEditor';
+import StackRows from '../components/StackRows';
 import BandReveal from '../components/motion/BandReveal';
 import ServicesSection from '../components/ServicesSection';
 import Portrait from '../components/Portrait';
@@ -166,6 +165,7 @@ export default function Home() {
         </div>
       </section>
 
+
       {/* Featured work */}
       <section className="tone-base section-pad">
         <div className="container-site">
@@ -186,14 +186,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why choose me: pinned reasons on a dark band */}
-      <BandReveal><WhyChooseMe /></BandReveal>
 
       {/* Services (this replaces the old Services page) */}
-      <ServicesSection />
+      <BandReveal><ServicesSection /></BandReveal>
 
-      {/* My stack: the tools written out in a code editor */}
-      <BandReveal><StackEditor /></BandReveal>
+      {/* My stack: rows of tool cards drifting across the dark band */}
+      <BandReveal><StackRows /></BandReveal>
 
       <ContactBand />
     </>

@@ -4,7 +4,11 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform }
 import { ease } from '../lib/motion';
 import { useCurrentTheme } from '../lib/theme';
 import FeatureIcon from './FeatureIcon';
+import TechLogo from './TechLogo';
+import type { StackItem } from '../data/stack';
+import { Check } from 'lucide-react';
 import SplitText from './motion/SplitText';
+import { asset } from '../lib/projects';
 
 export interface PinnedItem {
   /** Short name shown beside the big number or icon, e.g. "Review". */
@@ -12,6 +16,32 @@ export interface PinnedItem {
   heading: string;
   text: string;
   icon?: LucideIcon;
+  /** A brand logo shown instead of the icon (e.g. for services). */
+  logo?: StackItem;
+  /** A short list shown under the text, e.g. what a service includes. */
+  points?: string[];
+  /** A small label beside the heading, e.g. "Emerging focus". */
+  badge?: string;
+  /** A screenshot shown large in the pinned area (and in the item on phones). */
+  image?: string;
+  imageAlt?: string;
+}
+
+/** A screenshot in a slim browser-style frame, with the item's logo pinned to its corner. */
+function Shot({ src, logo, className = '' }: { src: string; logo?: StackItem; className?: string }) {
+  return (
+    <span className={`relative block ${className}`}>
+      <span className="block overflow-hidden rounded-xl border border-white/15 bg-white shadow-lg">
+        <span className="flex items-center gap-1.5 bg-[#1E2050] px-3 py-2">
+          <span className="h-2 w-2 rounded-full bg-[#FF5F57]" />
+          <span className="h-2 w-2 rounded-full bg-[#FEBC2E]" />
+          <span className="h-2 w-2 rounded-full bg-[#28C840]" />
+        </span>
+        <img src={asset(src)} alt="" loading="lazy" className="block aspect-[16/10] w-full object-cover object-left-top" />
+      </span>
+      {logo && <TechLogo item={logo} size={56} className="absolute -bottom-5 -left-5" />}
+    </span>
+  );
 }
 
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -86,22 +116,26 @@ export default function PinnedSteps({
             <SplitText id={`${id}-title`} text={title} className="display h-page mt-5" />
           </div>
 
-          <div aria-hidden="true" className="relative hidden lg:block">
+          <div aria-hidden="true" className="relative mt-12 hidden lg:block">
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.div
                 key={active}
-                className="flex items-end gap-8"
+                className={item.image ? "flex flex-col items-start gap-10" : "flex items-end gap-8"}
                 initial={{ y: 60, opacity: 0, rotateX: -30 }}
                 animate={{ y: 0, opacity: 1, rotateX: 0 }}
                 exit={{ y: -60, opacity: 0, rotateX: 30 }}
                 transition={{ duration: 0.65, ease: ease.out }}
               >
-                {visual === 'icon' && item.icon ? (
+                {item.image ? (
+                  <Shot src={item.image} logo={item.logo} className="w-[min(22rem,26vw,40vh)]" />
+                ) : visual === "icon" && item.logo ? (
+                  <TechLogo item={item.logo} size={140} />
+                ) : visual === "icon" && item.icon ? (
                   <FeatureIcon icon={item.icon} size={140} onColor={onDark} />
                 ) : (
                   <span className={`display block text-[clamp(9rem,16vw,15rem)] leading-[0.8] text-transparent ${stroke}`}>{pad(active + 1)}</span>
                 )}
-                <span className="pb-2">
+                <span className={item.image ? "flex items-end gap-5 pl-10" : "pb-2"}>
                   {visual === 'icon' && <span className={`display block text-6xl leading-none text-transparent ${stroke}`}>{pad(active + 1)}</span>}
                   <span className={`display mt-3 block text-3xl ${highlight}`}>{item.title}</span>
                 </span>
@@ -129,15 +163,27 @@ export default function PinnedSteps({
               }`}
             >
               <span className="flex items-center gap-5 lg:hidden">
-                {s.icon && <FeatureIcon icon={s.icon} size={52} onColor={onDark} />}
+                {s.logo ? <TechLogo item={s.logo} size={52} /> : s.icon && <FeatureIcon icon={s.icon} size={52} onColor={onDark} />}
                 <span className={`display text-5xl text-transparent ${stroke}`}>{pad(i + 1)}</span>
               </span>
+              {s.image && <Shot src={s.image} className="mb-4 mt-6 lg:hidden" />}
               <span aria-hidden="true" className={`mt-5 block h-px w-24 lg:mt-0 ${rule}`} />
               <h3 className="display mt-5 text-[clamp(1.75rem,2.6vw,2.5rem)] leading-tight">
                 <span className="sr-only">{i + 1}, {s.title}: </span>
                 {s.heading}
               </h3>
+              {s.badge && <span className="tag-learning mt-4 self-start !text-xs">{s.badge}</span>}
               <p className={`lede mt-4 max-w-md ${soft}`}>{s.text}</p>
+              {s.points && (
+                <ul className={`mt-5 grid gap-2 sm:grid-cols-2 ${soft}`}>
+                  {s.points.map((pt) => (
+                    <li key={pt} className="flex items-start gap-2 text-sm">
+                      <Check size={16} aria-hidden="true" className={`mt-0.5 shrink-0 ${highlight}`} />
+                      {pt}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ol>
