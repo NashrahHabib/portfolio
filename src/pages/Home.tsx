@@ -6,6 +6,7 @@ import { site } from '../data/site';
 import { featuredProjects } from '../lib/projects';
 import { useSeo } from '../lib/seo';
 import ContactBand from '../components/ContactBand';
+import DeskTabs from '../components/DeskTabs';
 import ProjectHoverList from '../components/ProjectHoverList';
 import Reveal from '../components/Reveal';
 import StackRows from '../components/StackRows';
@@ -151,7 +152,7 @@ export default function Home() {
             </div>
           </div>
 
-          <ul className="mt-20 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-12 grid gap-4 sm:grid-cols-2 md:mt-16 lg:grid-cols-4">
             {highlights.map(({ icon: Icon, title, text }, i) => (
               <li key={title}>
                 <Reveal delay={0.08 * i} variant="scale" className="card lift spotlight shadow-soft h-full p-6">
@@ -165,6 +166,9 @@ export default function Home() {
         </div>
       </section>
 
+
+      {/* At my desk: me behind a monitor, a tab for each tool with its official screenshot */}
+      <DeskTabs />
 
       {/* Featured work */}
       <section className="tone-base section-pad">

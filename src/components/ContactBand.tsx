@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Check, Clock, Copy, Mail, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowUpRight, Check, Clock, Copy, Mail } from 'lucide-react';
 import { site } from '../data/site';
 import SplitText from './motion/SplitText';
-import ContactForm from './ContactForm';
 
 /** Local time in Lahore, refreshed every 20 seconds. */
 function useLahoreTime() {
@@ -18,12 +17,11 @@ function useLahoreTime() {
 
 /**
  * Contact: the email address is the headline, set huge across the page. Pointing at it fills it
- * with the gradient from left to right; clicking it copies the address. Below it, "Start a project"
- * opens the contact form in a dialog, next to an email link, LinkedIn, Instagram and the time in Lahore.
+ * with the gradient from left to right; clicking it copies the address. Below it, an email button
+ * sits next to LinkedIn, Instagram and the time in Lahore.
  */
 export default function ContactBand() {
   const [copied, setCopied] = useState(false);
-  const dialog = useRef<HTMLDialogElement>(null);
   const time = useLahoreTime();
 
   useEffect(() => {
@@ -41,12 +39,10 @@ export default function ContactBand() {
     }
   };
 
-  const open = () => dialog.current?.showModal();
-  const close = () => dialog.current?.close();
   const [user, domain] = site.email.split('@');
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="tone-base relative scroll-mt-16 overflow-hidden pb-24 pt-20 md:pb-32 md:pt-28">
+    <section id="contact" aria-labelledby="contact-title" className="tone-base section-pad relative scroll-mt-16 overflow-hidden">
       <div aria-hidden="true" className="orb left-[calc(50%-12rem)] top-[18%] h-[24rem] w-[24rem] bg-[color:var(--skin)] opacity-25" />
 
       <div className="container-site relative">
@@ -70,7 +66,7 @@ export default function ContactBand() {
           onClick={copy}
           data-cursor={copied ? 'Copied' : 'Copy'}
           aria-label={`Copy email address ${site.email}`}
-          className="group mt-10 block w-full border-y border-line py-8 text-left md:mt-14 md:py-12"
+          className="group mt-12 block w-full border-y border-line py-8 text-left md:mt-16 md:py-12"
         >
           <span className="relative block">
             <span className="display block text-[clamp(1.6rem,6vw,5.5rem)] leading-none tracking-[-0.03em] md:whitespace-nowrap [overflow-wrap:anywhere]">
@@ -93,10 +89,7 @@ export default function ContactBand() {
         {/* Actions and links */}
         <div className="mt-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-6">
           <div className="flex flex-wrap gap-3">
-            <button type="button" onClick={open} className="btn btn-solid">
-              Start a project <ArrowUpRight size={18} aria-hidden="true" />
-            </button>
-            <a href={`mailto:${site.email}`} className="btn btn-line">
+            <a href={`mailto:${site.email}`} className="btn btn-solid">
               <Mail size={18} aria-hidden="true" /> Write an email
             </a>
           </div>
@@ -117,28 +110,6 @@ export default function ContactBand() {
           </ul>
         </div>
       </div>
-
-      {/* The form, in a dialog */}
-      <dialog
-        ref={dialog}
-        aria-labelledby="contact-form-title"
-        data-lenis-prevent
-        onClick={(e) => { if (e.target === dialog.current) close(); }}
-        className="w-[min(40rem,calc(100vw-2rem))] max-h-[calc(100svh-2rem)] overflow-y-auto rounded-panel border border-line bg-paper p-0 text-ink shadow-lg backdrop:bg-[#0D0E24]/60 backdrop:backdrop-blur-sm"
-      >
-        <div className="p-6 sm:p-8">
-          <div className="mb-6 flex items-start justify-between gap-4">
-            <div>
-              <p className="eyebrow">Start a project</p>
-              <h3 id="contact-form-title" className="display h-item mt-2">Tell me about your site</h3>
-            </div>
-            <button type="button" onClick={close} aria-label="Close" className="hover-grad grid h-10 w-10 shrink-0 place-items-center rounded-full border">
-              <X size={18} aria-hidden="true" />
-            </button>
-          </div>
-          <ContactForm />
-        </div>
-      </dialog>
     </section>
   );
 }

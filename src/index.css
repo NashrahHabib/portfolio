@@ -139,8 +139,9 @@
   .bleed-l { padding-left: max(clamp(1.25rem, 5vw, 4.5rem), calc((100vw - 80rem) / 2 + 4.5rem)); }
   .bleed-r { padding-right: max(clamp(1.25rem, 5vw, 4.5rem), calc((100vw - 80rem) / 2 + 4.5rem)); }
 
-  .container-site { @apply mx-auto w-full max-w-site; padding-inline: clamp(1.25rem, 5vw, 4.5rem); }
-  .section-pad { padding-block: clamp(4.5rem, 9vw, 8.5rem); }
+  .container-site { @apply mx-auto w-full max-w-site; padding-inline: clamp(1.5rem, 5vw, 4.5rem); }
+  /* One vertical rhythm for every section: 80px on phones up to 128px on large screens. */
+  .section-pad { padding-block: clamp(5rem, 8vw, 8rem); }
 
   /* Headings. Sizes come from the type-scale tokens; lines are balanced so headings break evenly. */
   .display { font-family: var(--font-display); font-weight: 600; color: var(--heading); letter-spacing: -0.02em; line-height: 1.08; text-wrap: balance; }

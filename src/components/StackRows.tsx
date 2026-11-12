@@ -84,7 +84,7 @@ export default function StackRows() {
         </p>
       </div>
 
-      <div aria-hidden="true" className="relative mt-14 space-y-4">
+      <div aria-hidden="true" className="relative mt-12 space-y-4 md:mt-16">
         <Row items={rows[0]} speed={-0.55} />
         <Row items={rows[1]} speed={0.45} />
         <Row items={rows[2]} speed={-0.6} />

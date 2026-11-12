@@ -2,7 +2,6 @@ import { Check, Wrench } from 'lucide-react';
 import { siPython, siShopify, siWoocommerce, siWordpress } from 'simple-icons';
 import { services } from '../data/services';
 import type { StackItem } from '../data/stack';
-import { asset } from '../lib/projects';
 import Reveal from './Reveal';
 import TechLogo from './TechLogo';
 import SplitText from './motion/SplitText';
@@ -16,28 +15,18 @@ const logos: Record<string, StackItem> = {
   emerging: { name: 'Python', note: '', logo: siPython },
 };
 
-/** Official screenshots from each platform's own documentation (WordPress, WooCommerce, Shopify, Python). */
-const shots: Record<string, string> = {
-  wordpress: '/images/editors/wordpress-site-editor.jpg',
-  woocommerce: '/images/editors/woocommerce-block-editor.jpg',
-  shopify: '/images/editors/shopify-theme-editor.jpg',
-  maintenance: '/images/editors/wordpress-updates.jpg',
-  emerging: '/images/editors/python-installer.jpg',
-};
-
-/** Tile sizes in the bento grid (large screens): WordPress leads, the stores sit beside it, the rest share the bottom row. */
+/** Tile sizes in the bento grid (large screens): WordPress and WooCommerce on top, the other three below. */
 const tiles: Record<string, string> = {
-  wordpress: 'lg:col-span-4 lg:row-span-2',
+  wordpress: 'lg:col-span-4',
   woocommerce: 'lg:col-span-2',
   shopify: 'lg:col-span-2',
-  maintenance: 'lg:col-span-3',
-  emerging: 'lg:col-span-3',
+  maintenance: 'lg:col-span-2',
+  emerging: 'lg:col-span-2',
 };
 
 /**
- * Services as a bento grid on the dark band. Each tile has the service's logo, name and summary,
- * and its official screenshot. Pointing at (or tabbing into) a tile zooms the screenshot and
- * slides up what's included; on touch screens the included list is shown under the summary.
+ * Services as a bento grid on the dark band. Each tile has the service's logo, name, summary and
+ * what's included. (The tools' screenshots are in the "At my desk" section.)
  */
 export default function ServicesSection() {
   return (
@@ -53,7 +42,7 @@ export default function ServicesSection() {
           <p className="lede text-white/75 lg:col-span-5">What I build and look after for clients, and one area I’m growing into.</p>
         </div>
 
-        <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:mt-16 lg:grid-cols-6">
+        <ul className="mt-12 grid gap-4 md:mt-16 md:grid-cols-2 lg:grid-cols-6">
           {services.map((s, i) => {
             const big = s.id === 'wordpress';
             const logo = logos[s.id] ?? logos.wordpress;
@@ -61,12 +50,21 @@ export default function ServicesSection() {
               <li key={s.id} id={s.id} className={`${tiles[s.id] ?? 'lg:col-span-2'} ${big ? 'md:col-span-2' : ''}`}>
                 <Reveal delay={0.06 * i} variant="scale" className="h-full">
                   <article
-                    tabIndex={0}
                     aria-labelledby={`${s.id}-title`}
-                    className={`group flex h-full flex-col overflow-hidden rounded-panel border bg-white/[0.04] p-6 outline-offset-4 transition-colors duration-500 hover:border-white/30 hover:bg-white/[0.07] md:p-7 ${
+                    className={`group relative isolate flex h-full flex-col overflow-hidden rounded-panel border bg-white/[0.04] p-6 outline-offset-4 transition-colors duration-500 hover:border-white/30 hover:bg-white/[0.07] md:p-8 ${
                       s.emerging ? 'border-dashed border-[color:var(--skin)]/50' : 'border-white/10'
                     }`}
                   >
+                    {/* The large tile: a faint WordPress mark in the corner */}
+                    {big && (
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        className="pointer-events-none absolute -bottom-16 -right-10 -z-10 hidden h-64 w-64 fill-white/[0.05] transition-transform duration-700 group-hover:rotate-12 motion-reduce:transition-none lg:block"
+                      >
+                        <path d={siWordpress.path} />
+                      </svg>
+                    )}
                     <div className="flex items-start justify-between gap-4">
                       <TechLogo item={logo} size={big ? 56 : 48} />
                       {s.emerging && <span className="rounded-full bg-[color:var(--skin)] px-3 py-1 text-xs font-semibold text-[#141532]">Emerging focus</span>}
@@ -74,40 +72,13 @@ export default function ServicesSection() {
                     <h3 id={`${s.id}-title`} className={`display mt-5 leading-tight text-white ${big ? 'text-[clamp(1.75rem,2.6vw,2.5rem)]' : 'text-2xl'}`}>{s.title}</h3>
                     <p className={`mt-2 text-white/70 ${big ? 'max-w-lg' : ''}`}>{s.summary}</p>
 
-                    {/* Touch screens: what's included, as a list */}
-                    {/* The large tile always lists it; the others list it on touch screens only */}
-                    <ul className={`grid gap-1.5 text-sm text-white/80 ${big ? 'mt-6 gap-x-6 gap-y-2 sm:grid-cols-2 lg:text-base' : 'mt-4 [@media(hover:hover)]:hidden'}`}>
+                    {/* What's included, pinned to the bottom of the tile */}
+                    <div aria-hidden="true" className="mt-auto pt-6" />
+                    <ul className={`grid gap-x-6 gap-y-2 border-t border-white/10 pt-5 text-sm text-white/80 ${big ? 'sm:grid-cols-2 lg:text-base' : ''}`}>
                       {s.items.map((it) => (
                         <li key={it} className="flex items-start gap-2"><Check size={15} aria-hidden="true" className="mt-0.5 shrink-0 text-[color:var(--skin)]" />{it}</li>
                       ))}
                     </ul>
-
-                    {/* Screenshot, with what's included sliding up over it on hover or focus */}
-                    <div className="mt-auto pt-6" />
-                    <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-white/10 bg-white">
-                      <img
-                        src={asset(shots[s.id])}
-                        alt={`${s.title}: screenshot from the official documentation`}
-                        loading="lazy"
-                        className="absolute inset-0 h-full w-full object-cover object-left-top transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06] group-focus-visible:scale-[1.06] motion-reduce:transition-none"
-                      />
-                      {!big && <div
-                        aria-hidden="true"
-                        className="absolute inset-x-0 bottom-0 hidden translate-y-full bg-gradient-to-t from-[#0D0E24] via-[#0D0E24]/95 to-[#0D0E24]/70 p-5 pt-8 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-focus-visible:translate-y-0 motion-reduce:transition-none [@media(hover:hover)]:block"
-                      >
-                        <ul className="grid gap-1.5 text-sm text-white/90">
-                          {s.items.map((it) => (
-                            <li key={it} className="flex items-start gap-2"><Check size={15} className="mt-0.5 shrink-0 text-[color:var(--skin)]" />{it}</li>
-                          ))}
-                        </ul>
-                      </div>}
-                    </div>
-                    {/* Screen readers on mouse devices: the included list, once */}
-                    {!big && (
-                      <ul className="sr-only hidden [@media(hover:hover)]:block">
-                        {s.items.map((it) => <li key={it}>{it}</li>)}
-                      </ul>
-                    )}
                   </article>
                 </Reveal>
               </li>
