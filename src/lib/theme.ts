@@ -26,14 +26,3 @@ export function useTheme() {
   const toggle = useCallback(() => setTheme((t) => (t === 'dark' ? 'light' : 'dark')), []);
   return { theme, toggle };
 }
-
-/** Read-only: the current theme, updated whenever the header toggle changes it. */
-export function useCurrentTheme(): Theme {
-  const [theme, setTheme] = useState<Theme>(current);
-  useEffect(() => {
-    const observer = new MutationObserver(() => setTheme(current()));
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-    return () => observer.disconnect();
-  }, []);
-  return theme;
-}
