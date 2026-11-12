@@ -1,39 +1,30 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { ArrowUpRight, Check, Copy, X } from 'lucide-react';
+import { ArrowUpRight, Check, Clock, Copy, Mail, X } from 'lucide-react';
 import { site } from '../data/site';
-import { hasFinePointer, prefersReducedMotion } from '../lib/motion';
+import SplitText from './motion/SplitText';
 import ContactForm from './ContactForm';
-import ScrollMarquee from './motion/ScrollMarquee';
+
+/** Local time in Lahore, refreshed every 20 seconds. */
+function useLahoreTime() {
+  const format = () =>
+    new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Karachi', hour: '2-digit', minute: '2-digit', hour12: true }).format(new Date());
+  const [time, setTime] = useState(format);
+  useEffect(() => {
+    const t = window.setInterval(() => setTime(format()), 20000);
+    return () => window.clearInterval(t);
+  }, []);
+  return time;
+}
 
 /**
- * Contact: "Let’s work together" runs across the page in huge type (it drifts and speeds up with
- * scrolling), and a round "Start a project" button sits on top of it. On a mouse or trackpad the
- * button is magnetic: it leans towards the pointer anywhere in the section. It opens the contact
- * form in a dialog. Email (with a copy button), LinkedIn and Instagram sit underneath.
+ * Contact: the email address is the headline, set huge across the page. Pointing at it fills it
+ * with the gradient from left to right; clicking it copies the address. Below it, "Start a project"
+ * opens the contact form in a dialog, next to an email link, LinkedIn, Instagram and the time in Lahore.
  */
 export default function ContactBand() {
   const [copied, setCopied] = useState(false);
-  const area = useRef<HTMLDivElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
-  const [fine] = useState(() => hasFinePointer() && !prefersReducedMotion());
-
-  // Magnetic pull towards the pointer
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const x = useSpring(mx, { stiffness: 150, damping: 15, mass: 0.4 });
-  const y = useSpring(my, { stiffness: 150, damping: 15, mass: 0.4 });
-
-  const onMove = (e: React.PointerEvent) => {
-    if (!fine || !area.current) return;
-    const r = area.current.getBoundingClientRect();
-    const dx = e.clientX - (r.left + r.width / 2);
-    const dy = e.clientY - (r.top + r.height / 2);
-    const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
-    mx.set(clamp(dx * 0.35, 220));
-    my.set(clamp(dy * 0.35, 90));
-  };
-  const onLeave = () => { mx.set(0); my.set(0); };
+  const time = useLahoreTime();
 
   useEffect(() => {
     if (!copied) return;
@@ -52,67 +43,79 @@ export default function ContactBand() {
 
   const open = () => dialog.current?.showModal();
   const close = () => dialog.current?.close();
+  const [user, domain] = site.email.split('@');
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="tone-base relative scroll-mt-16 overflow-hidden pb-24 pt-20 md:pb-32 md:pt-28">
-      <div className="container-site flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Contact</p>
-          <h2 id="contact-title" className="display h-section mt-3">Have a project in mind?</h2>
-        </div>
-        <p className="flex items-center gap-2.5 text-sm text-muted">
-          <span aria-hidden="true" className="relative flex h-2.5 w-2.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22C55E] opacity-70 motion-reduce:hidden" />
-            <span className="relative h-2.5 w-2.5 rounded-full bg-[#16A34A]" />
-          </span>
-          {site.availability}
-        </p>
-      </div>
+      <div aria-hidden="true" className="orb left-[calc(50%-12rem)] top-[18%] h-[24rem] w-[24rem] bg-[color:var(--skin)] opacity-25" />
 
-      {/* Marquee with the magnetic button on top */}
-      <div ref={area} className="relative mt-6 md:mt-10" onPointerMove={onMove} onPointerLeave={onLeave}>
-        <ScrollMarquee words={['Let’s work together']} reverseWords={['Start a project']} />
-        <div className="pointer-events-none absolute inset-0 grid place-items-center">
-          <motion.button
-            type="button"
-            onClick={open}
-            style={{ x, y }}
-            data-cursor="Hello"
-            className="pointer-events-auto grid h-36 w-36 place-items-center rounded-full bg-gradient-to-br from-[var(--grad-a)] to-[var(--grad-b)] text-center font-semibold text-white shadow-lg transition-[box-shadow,transform] duration-300 hover:scale-105 hover:shadow-[0_20px_60px_-10px_rgba(67,56,202,0.6)] focus-visible:outline-offset-4 md:h-48 md:w-48 md:text-lg"
-          >
-            <span className="flex flex-col items-center gap-1 leading-tight">
-              Start a<br />project
-              <ArrowUpRight size={22} aria-hidden="true" />
-            </span>
-          </motion.button>
-        </div>
-      </div>
-
-      {/* Ways to reach me */}
-      <div className="container-site mt-6 grid gap-6 md:mt-10 md:grid-cols-3 md:items-end">
-        <div className="md:col-span-2">
-          <p className="text-sm text-muted">Email me</p>
-          <div className="mt-1 flex flex-wrap items-center gap-3">
-            <a href={`mailto:${site.email}`} className="display link text-[clamp(1.4rem,3.2vw,2.5rem)] [overflow-wrap:anywhere]">{site.email}</a>
-            <button type="button" onClick={copy} className="hover-grad inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-semibold">
-              {copied ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
-              {copied ? 'Copied' : 'Copy'}
-            </button>
+      <div className="container-site relative">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="eyebrow">Contact</p>
+            <SplitText id="contact-title" text="Something worth *building?*" className="display h-section mt-3" />
           </div>
-          <p className="sr-only" aria-live="polite">{copied ? `${site.email} copied to the clipboard` : ''}</p>
+          <p className="flex items-center gap-2.5 text-sm text-muted">
+            <span aria-hidden="true" className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22C55E] opacity-70 motion-reduce:hidden" />
+              <span className="relative h-2.5 w-2.5 rounded-full bg-[#16A34A]" />
+            </span>
+            {site.availability}
+          </p>
         </div>
-        <ul className="flex flex-wrap gap-x-6 gap-y-2 font-semibold md:justify-end">
-          <li>
-            <a className="link inline-flex items-center gap-1" href={site.linkedin} target="_blank" rel="noopener noreferrer">
-              LinkedIn <ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span>
+
+        {/* The email as the headline: click to copy */}
+        <button
+          type="button"
+          onClick={copy}
+          data-cursor={copied ? 'Copied' : 'Copy'}
+          aria-label={`Copy email address ${site.email}`}
+          className="group mt-10 block w-full border-y border-line py-8 text-left md:mt-14 md:py-12"
+        >
+          <span className="relative block">
+            <span className="display block text-[clamp(1.6rem,6vw,5.5rem)] leading-none tracking-[-0.03em] md:whitespace-nowrap [overflow-wrap:anywhere]">
+              {user}<span className="text-[color:var(--label)]">@</span>{domain}
+            </span>
+            <span
+              aria-hidden="true"
+              className="display hl absolute inset-0 block text-[clamp(1.6rem,6vw,5.5rem)] leading-none tracking-[-0.03em] md:whitespace-nowrap transition-[clip-path] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] [clip-path:inset(0_100%_0_0)] [overflow-wrap:anywhere] group-hover:[clip-path:inset(0_0_0_0)] group-focus-visible:[clip-path:inset(0_0_0_0)] motion-reduce:transition-none"
+            >
+              {site.email}
+            </span>
+          </span>
+          <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-muted">
+            {copied ? <Check size={16} aria-hidden="true" className="text-[#16A34A]" /> : <Copy size={16} aria-hidden="true" />}
+            {copied ? 'Email copied' : 'Click to copy'}
+          </span>
+        </button>
+        <p className="sr-only" aria-live="polite">{copied ? `${site.email} copied to the clipboard` : ''}</p>
+
+        {/* Actions and links */}
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-6">
+          <div className="flex flex-wrap gap-3">
+            <button type="button" onClick={open} className="btn btn-solid">
+              Start a project <ArrowUpRight size={18} aria-hidden="true" />
+            </button>
+            <a href={`mailto:${site.email}`} className="btn btn-line">
+              <Mail size={18} aria-hidden="true" /> Write an email
             </a>
-          </li>
-          <li>
-            <a className="link inline-flex items-center gap-1" href={site.instagram} target="_blank" rel="noopener noreferrer">
-              Instagram <ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          </li>
-        </ul>
+          </div>
+          <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 font-semibold">
+            <li>
+              <a className="link inline-flex items-center gap-1" href={site.linkedin} target="_blank" rel="noopener noreferrer">
+                LinkedIn <ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+            <li>
+              <a className="link inline-flex items-center gap-1" href={site.instagram} target="_blank" rel="noopener noreferrer">
+                Instagram <ArrowUpRight size={16} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+            <li className="inline-flex items-center gap-1.5 text-sm font-normal text-muted">
+              <Clock size={15} aria-hidden="true" /> {time} in Lahore
+            </li>
+          </ul>
+        </div>
       </div>
 
       {/* The form, in a dialog */}
