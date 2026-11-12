@@ -4,6 +4,10 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Code2, Globe, ShoppingBag, Sparkles } from 'lucide-react';
 import { site } from '../data/site';
 import { featuredProjects } from '../lib/projects';
+
+/** The six projects in Featured Work on the homepage, in order. */
+const homeSlugs = ['yuki-shrimp', 'agpus', 'clever-nurse', 'pfm-fleet-service', 'mass-timber-advisors', 'river-city-stump-removal'];
+const homeProjects = homeSlugs.map((s) => featuredProjects.find((p) => p.slug === s)).filter((p): p is (typeof featuredProjects)[number] => Boolean(p));
 import { useSeo } from '../lib/seo';
 import ContactBand from '../components/ContactBand';
 import DeskTabs from '../components/DeskTabs';
@@ -182,7 +186,7 @@ export default function Home() {
         </div>
 
         <div className="mt-12 md:mt-16">
-          <ProjectHoverList projects={featuredProjects.slice(0, 6)} />
+          <ProjectHoverList projects={homeProjects} />
         </div>
 
         <div className="container-site mt-12 text-center">

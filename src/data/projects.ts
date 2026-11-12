@@ -29,6 +29,7 @@ export const CATEGORIES = [
   'Directory & Marketplace',
   'Business Consulting',
   'Automotive',
+  'Local services',
   'Software',
   'Other / To be classified',
 ] as const;
@@ -152,7 +153,7 @@ const entries: ProjectInput[] = [
     technologies: WP_ELEMENTOR,
   },
   { name: 'cnamac.com', url: 'https://cnamac.com/' },
-  { name: 'River City Stump Removal', url: 'https://rivercitystumpremoval.com/', featured: true,
+  { name: 'River City Stump Removal', url: 'https://rivercitystumpremoval.com/', category: 'Local services', featured: true,
     company: 'SMCSE Solutions', work: ['Designed pages', 'Figma to WordPress', 'Custom coding', 'Theme customisation', 'Custom tools and integrations', 'Performance optimisation', 'SEO', 'Maintenance and fixes'] },
   {
     name: 'Hornsby Business Advisory', url: 'https://hornsbyadvisory.com/', category: 'Business Consulting',
