@@ -22,11 +22,13 @@ const short: Record<string, string> = {
   emerging: 'Emerging',
 };
 
-/** Official editor screenshots, from each platform's own documentation. */
+/** Official screenshots from each platform's own documentation (WordPress, WooCommerce, Shopify, Python). */
 const shots: Record<string, string> = {
   wordpress: '/images/editors/wordpress-site-editor.jpg',
   woocommerce: '/images/editors/woocommerce-block-editor.jpg',
   shopify: '/images/editors/shopify-theme-editor.jpg',
+  maintenance: '/images/editors/wordpress-updates.jpg',
+  emerging: '/images/editors/python-installer.jpg',
 };
 
 const items: PinnedItem[] = services.map((s) => ({

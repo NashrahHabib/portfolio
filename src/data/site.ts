@@ -8,7 +8,8 @@ export const site = {
   location: 'Lahore, Pakistan',
   availability: 'Available for remote projects worldwide',
   email: 'nashrahhabib@gmail.com',
-  linkedin: 'https://linkedin.com/in/nashrahhabib',
+  linkedin: 'https://www.linkedin.com/in/nashrahhabib/',
+  instagram: 'https://www.instagram.com/nashrahtrione/',
   /** Portrait photo. To change it, replace src/assets/portrait.jpg (4:5 portrait orientation). */
   portrait,
   /**

@@ -59,9 +59,12 @@ export default function Footer() {
         {/* Contact */}
         <div className="space-y-2 lg:text-right">
           <a href={`mailto:${site.email}`} className={`${link} font-semibold [overflow-wrap:anywhere]`}>{site.email}</a>
-          <p>
+          <p className="flex gap-5 lg:justify-end">
             <a className={`${link} inline-flex items-center gap-1`} href={site.linkedin} target="_blank" rel="noopener noreferrer">
               LinkedIn <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            <a className={`${link} inline-flex items-center gap-1`} href={site.instagram} target="_blank" rel="noopener noreferrer">
+              Instagram <ArrowUpRight size={15} aria-hidden="true" /><span className="sr-only"> (opens in a new tab)</span>
             </a>
           </p>
           <p className="inline-flex items-center gap-1.5 text-sm text-[rgba(245,246,255,0.75)]">
@@ -71,7 +74,7 @@ export default function Footer() {
       </div>
 
       <div className="container-site mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-6 text-sm text-[rgba(245,246,255,0.7)]">
-        <p>© {year} {site.name}. Designed and built by hand.</p>
+        <p>© {year} {site.name}</p>
         <p>WordPress · WooCommerce · Shopify</p>
       </div>
 

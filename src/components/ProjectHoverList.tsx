@@ -65,7 +65,7 @@ export default function ProjectHoverList({ projects }: { projects: Project[] }) 
                   onFocus={() => setActive(i)}
                   onBlur={() => setActive(null)}
                 >
-                  <span className={`display block text-[clamp(2rem,4.8vw,4.5rem)] !font-semibold leading-[1.05] transition-opacity duration-500 ${dim ? 'opacity-[0.08]' : 'opacity-[0.16]'}`}>
+                  <span className={`display block text-[clamp(2rem,4.8vw,4.5rem)] !font-semibold leading-[1.05] transition-opacity duration-500 ${dim ? 'opacity-25' : 'opacity-100'}`}>
                     {p.name}
                   </span>
                   <span
