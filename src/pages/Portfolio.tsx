@@ -3,7 +3,8 @@ import { AnimatePresence } from 'framer-motion';
 import { LayoutGrid, List, Search, X } from 'lucide-react';
 import { CATEGORIES, COMPANIES, projects } from '../data/projects';
 import { useSeo } from '../lib/seo';
-import PageHeader from '../components/PageHeader';
+import WorkViewer from '../components/WorkViewer';
+import SplitText from '../components/motion/SplitText';
 import ProjectCard from '../components/ProjectCard';
 
 export default function Portfolio() {
@@ -50,12 +51,14 @@ export default function Portfolio() {
 
   return (
     <>
-      <PageHeader title="Portfolio*.*">
-        <p>Selected websites I’ve designed and custom coded. Search by name, or filter by category or company.</p>
-      </PageHeader>
+      <WorkViewer projects={projects} />
 
-      <section className="tone-alt pb-24 pt-12">
+      <section id="all-projects" aria-labelledby="all-projects-title" className="tone-alt section-pad">
         <div className="container-site">
+          <div className="mb-10 grid gap-4 md:grid-cols-12 md:items-end">
+            <SplitText id="all-projects-title" text="All *Projects*" className="display h-section md:col-span-6" />
+            <p className="text-muted md:col-span-5 md:col-start-8">Search by name, or filter by category or company.</p>
+          </div>
           <div className="grid gap-8 md:grid-cols-12">
             <div className="md:col-span-4">
               <label htmlFor="project-search" className="label">Search by project name</label>

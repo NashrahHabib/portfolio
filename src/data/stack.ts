@@ -10,7 +10,7 @@
  */
 import type { LucideIcon } from 'lucide-react';
 import {
-  ArrowRightLeft, Code2, DatabaseBackup, Droplets, Gauge, Image, Link2, Server, ShoppingCart, SquareTerminal, Truck, UploadCloud,
+  ArrowRightLeft, Bug, Code2, DatabaseBackup, FolderSync, Droplets, Gauge, Image, Link2, Server, ShoppingCart, SquareTerminal, Truck, UploadCloud,
 } from 'lucide-react';
 import {
   siClaude, siCss, siElementor, siFastapi, siFigma, siGit, siGithub, siGoogleanalytics, siGooglesearchconsole, siGoogletagmanager, siGutenberg,
@@ -93,6 +93,7 @@ export const stackGroups: StackGroup[] = [
       { name: 'Git', note: 'Version control', logo: siGit },
       { name: 'GitHub', note: 'Repositories and deploys', logo: siGithub },
       { name: 'WP-CLI and SSH', note: 'Server work from the command line', icon: SquareTerminal },
+      { name: 'rsync', note: 'Fast, safe file syncing between servers', icon: FolderSync },
       { name: 'Server management', note: 'Hosting setup and upkeep', icon: Server },
       { name: 'Hosting', note: 'Choosing and configuring hosts', icon: UploadCloud },
       { name: 'Migration', note: 'Moving sites without losing data', icon: ArrowRightLeft },
@@ -122,8 +123,9 @@ export const stackGroups: StackGroup[] = [
     activity: 'Reading a Figma file and using AI tools to build and test faster.',
     items: [
       { name: 'Figma', note: 'Designs ready to build', logo: siFigma },
-      { name: 'Claude', note: 'AI-assisted coding and QA', logo: siClaude },
+      { name: 'Claude', note: 'AI-assisted code generation', logo: siClaude },
       { name: 'ChatGPT', note: 'Drafting and problem solving', image: '/images/logos/openai.svg' },
+      { name: 'Debugging and QA', note: 'Finding and fixing issues before launch', icon: Bug },
       { name: 'Python', note: 'Automation and scripts', logo: siPython, learning: true },
       { name: 'FastAPI', note: 'APIs in Python', logo: siFastapi, learning: true },
     ],

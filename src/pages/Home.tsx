@@ -6,13 +6,11 @@ import { site } from '../data/site';
 import { featuredProjects } from '../lib/projects';
 import { useSeo } from '../lib/seo';
 import ContactBand from '../components/ContactBand';
-import ProjectStack from '../components/ProjectStack';
+import ProjectHoverList from '../components/ProjectHoverList';
 import Reveal from '../components/Reveal';
-import SkillGroups from '../components/SkillGroups';
 import ProcessSteps from '../components/ProcessSteps';
 import WhyPanels from '../components/WhyPanels';
-import StackHub from '../components/StackHub';
-import StackMarquee from '../components/StackMarquee';
+import StackGrid from '../components/StackGrid';
 import ServicesSection from '../components/ServicesSection';
 import Portrait from '../components/Portrait';
 import LightUpText from '../components/motion/LightUpText';
@@ -173,14 +171,15 @@ export default function Home() {
         <div className="container-site">
           <div className="grid gap-6 md:grid-cols-12 md:items-end md:gap-8">
             <SplitText text="Featured *Work*" className="display h-section md:col-span-7" />
-            <p className="text-muted md:col-span-4 md:col-start-9">
-              A selection of the websites I’ve designed and custom coded.{' '}
-              <Link to="/portfolio" className="link font-semibold text-current">View the full portfolio</Link>
+            <p className="lede text-muted md:col-span-5 md:col-start-8">
+              A selection of the websites I’ve designed and custom coded. Point at a name to see it.
             </p>
           </div>
         </div>
 
-        <ProjectStack projects={featuredProjects.slice(0, 6)} />
+        <div className="mt-12 md:mt-16">
+          <ProjectHoverList projects={featuredProjects.slice(0, 6)} />
+        </div>
 
         <div className="container-site mt-12 text-center">
           <Link to="/portfolio" className="btn btn-solid">See All {featuredProjects.length} Projects</Link>
@@ -193,26 +192,11 @@ export default function Home() {
       {/* Services (this replaces the old Services page) */}
       <ServicesSection />
 
-      {/* My stack: tool groups around the portrait */}
-      <StackHub />
-      <StackMarquee rowsOnly />
+      {/* My stack: glowing grid of tools */}
+      <StackGrid />
 
       {/* How I work: pinned steps */}
       <ProcessSteps />
-
-      {/* Skills */}
-      <section className="tone-base section-pad">
-        <div className="container-site">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <SplitText text="Skills & *Tools*" className="display h-section" />
-              <p className="mt-3 max-w-md text-muted">What I use every day to build, launch and look after websites.</p>
-            </div>
-            <Link to="/#contact" className="btn btn-line">Work With Me</Link>
-          </div>
-          <div className="mt-10"><SkillGroups /></div>
-        </div>
-      </section>
 
       <ContactBand />
     </>

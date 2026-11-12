@@ -49,6 +49,7 @@ export default function ProjectFrame({ project, src, eager, className = '' }: Pr
               <img
                 src={asset(image!)}
                 alt={`Screenshot of the ${project.name} website`}
+                draggable={false}
                 loading={eager ? 'eager' : 'lazy'}
                 decoding="async"
                 onError={() => setFailed(true)}
