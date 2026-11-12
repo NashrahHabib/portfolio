@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Header from './Header';
 import Footer from './Footer';
+import BandReveal from './motion/BandReveal';
 import BackToTop from './BackToTop';
 import PageCurtain from './motion/PageCurtain';
 import PointerEffects from './motion/PointerEffects';
@@ -69,7 +70,7 @@ export default function Layout() {
       <motion.main id="main" ref={mainRef} tabIndex={-1} key={pathname} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.35 }}>
         <Outlet />
       </motion.main>
-      <Footer />
+      <BandReveal exit={false}><Footer /></BandReveal>
       <BackToTop />
     </>
   );

@@ -35,7 +35,7 @@ export default function ContactBand() {
 
       <div className="container-site relative">
         <motion.div
-          className="mx-auto max-w-6xl rounded-[2rem] border-2 border-transparent p-6 shadow-lg [background:linear-gradient(var(--bg),var(--bg))_padding-box,linear-gradient(120deg,var(--grad-a),var(--grad-b),var(--skin))_border-box] sm:p-10 md:p-12"
+          className="mx-auto max-w-6xl rounded-[2rem] border border-line bg-[color:var(--bg)] p-6 shadow-soft sm:p-10 md:p-12"
           initial={{ opacity: 0, y: 40, scale: 0.97 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: '0px 0px -10% 0px' }}
@@ -51,7 +51,7 @@ export default function ContactBand() {
                   alt={`Portrait of ${site.name}`}
                   className="relative aspect-square w-full rounded-full border-4 border-[color:var(--bg)] object-cover object-top"
                 />
-                <span className="absolute -bottom-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full border border-line bg-paper px-3.5 py-1.5 text-xs font-bold shadow-card">
+                <span className="absolute -bottom-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full border border-line bg-paper px-3.5 py-1.5 text-xs font-semibold shadow-card">
                   <span aria-hidden="true" className="relative flex h-2.5 w-2.5">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22C55E] opacity-70 motion-reduce:hidden" />
                     <span className="relative h-2.5 w-2.5 rounded-full bg-[#16A34A]" />

@@ -1,40 +1,11 @@
-import { Award, Code2, Globe2, LifeBuoy, Rocket, ScanSearch, ShieldCheck, ShoppingCart, SlidersHorizontal } from 'lucide-react';
+import { Award, Globe2, ShieldCheck, ShoppingCart, SlidersHorizontal } from 'lucide-react';
 import type { PinnedItem } from '../components/PinnedSteps';
 
 /**
- * Homepage storytelling sections. Edit the wording here; each section adjusts to any number of
+ * "Why choose me" reasons. Edit the wording here; the section adjusts to any number of
  * items (three to five read best). Icons come from lucide.dev.
+ * Every point is based on the experience described in the About section.
  */
-
-/** "How I work" */
-export const processSteps: PinnedItem[] = [
-  {
-    title: 'Review',
-    icon: ScanSearch,
-    heading: 'Understand the design',
-    text: 'I go through the design and what the site needs to do, and we agree on the pages, features and timeline before any code is written.',
-  },
-  {
-    title: 'Build',
-    icon: Code2,
-    heading: 'A custom theme, not a page builder maze',
-    text: 'The design becomes a WordPress theme with editable sections and sensible fields, or a WooCommerce or Shopify store set up around your products.',
-  },
-  {
-    title: 'Launch',
-    icon: Rocket,
-    heading: 'Tested, then live',
-    text: 'I check the site on phones, tablets and the main browsers, look at speed and the basics of SEO, and then put it live.',
-  },
-  {
-    title: 'Support',
-    icon: LifeBuoy,
-    heading: 'Looked after afterwards',
-    text: 'Updates, fixes and improvements that keep the site running, so you can run it day to day without a developer.',
-  },
-];
-
-/** "Why choose me". Every point is based on the experience described in the About section. */
 export const reasons: PinnedItem[] = [
   {
     title: 'Experience',

@@ -8,9 +8,9 @@ import { useSeo } from '../lib/seo';
 import ContactBand from '../components/ContactBand';
 import ProjectHoverList from '../components/ProjectHoverList';
 import Reveal from '../components/Reveal';
-import ProcessSteps from '../components/ProcessSteps';
-import WhyPanels from '../components/WhyPanels';
-import StackGrid from '../components/StackGrid';
+import WhyChooseMe from '../components/WhyChooseMe';
+import StackEditor from '../components/StackEditor';
+import BandReveal from '../components/motion/BandReveal';
 import ServicesSection from '../components/ServicesSection';
 import Portrait from '../components/Portrait';
 import LightUpText from '../components/motion/LightUpText';
@@ -139,10 +139,10 @@ export default function Home() {
             </div>
 
             <div className="lg:col-span-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted">About Me</p>
-              <SplitText id="about-title" text={['Thoughtful *Development.*', 'Practical Solutions.']} className="display h-section mt-3" />
+              <p className="eyebrow">About Me</p>
+              <SplitText id="about-title" text="Thoughtful *Development.* Practical Solutions." className="display h-section mt-3" />
               <LightUpText
-                className="display mt-10 text-[clamp(1.5rem,2.6vw,2.4rem)] !font-bold leading-[1.35] !tracking-[-0.01em]"
+                className="display mt-10 text-[clamp(1.5rem,2.6vw,2.4rem)] !font-semibold leading-[1.35] !tracking-[-0.01em]"
                 text={aboutStory}
               />
               <div className="mt-10 flex flex-wrap gap-3">
@@ -186,17 +186,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why choose me: expanding panels */}
-      <WhyPanels />
+      {/* Why choose me: pinned reasons on a dark band */}
+      <BandReveal><WhyChooseMe /></BandReveal>
 
       {/* Services (this replaces the old Services page) */}
       <ServicesSection />
 
-      {/* My stack: glowing grid of tools */}
-      <StackGrid />
-
-      {/* How I work: pinned steps */}
-      <ProcessSteps />
+      {/* My stack: the tools written out in a code editor */}
+      <BandReveal><StackEditor /></BandReveal>
 
       <ContactBand />
     </>

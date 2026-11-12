@@ -1,8 +1,7 @@
-@import '@fontsource/nunito/400.css';
-@import '@fontsource/nunito/600.css';
-@import '@fontsource/nunito/700.css';
-@import '@fontsource/nunito/800.css';
-@import '@fontsource/nunito/900.css';
+@import '@fontsource/archivo/400.css';
+@import '@fontsource/archivo/500.css';
+@import '@fontsource/archivo/600.css';
+@import '@fontsource/archivo/700.css';
 
 @tailwind base;
 @tailwind components;
@@ -17,9 +16,9 @@
   Text and control colours meet WCAG 2.1 AA contrast in both themes.
 */
 :root {
-  /* Typography: Nunito throughout (Google Font, self-hosted). Headings use ExtraBold (800). */
-  --font-display: 'Nunito', 'Segoe UI', system-ui, sans-serif;
-  --font-body: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+  /* Typography: Archivo throughout (Google Font, self-hosted). Headings use SemiBold (600). */
+  --font-display: 'Archivo', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Archivo', 'Segoe UI', system-ui, sans-serif;
 
   /* Headings are pure black (white on dark surfaces). One key word per heading is filled with the
      brand gradient (written as *word* in the text); --heading-hl is its solid fallback. */
@@ -44,9 +43,10 @@
   --bg: #FFFFFF;           /* page background */
   --bg-alt: #0C142808;     /* alternate sections: a 3% navy tint over white */
   --skin-soft: #EEF0FF;    /* chips, tags and small fills: pale indigo */
-  --fg: #141532;           /* body text: deep indigo-navy */
-  --muted: #4A4E6A;        /* secondary text (8:1 on white) */
-  --line: rgba(20, 21, 50, 0.12);
+  --fg: #3D3D4D;           /* body text */
+  --muted: #3D3D4D;        /* paragraph text (same as body) */
+  --label: #6E6E7C;        /* small uppercase labels above headings */
+  --line: rgb(226, 216, 251); /* borders everywhere: pale lavender */
   --control: #7C7F99;      /* borders of inputs and chips (3:1+) */
   --accent: #4338CA;       /* links, outlines, solid fills */
   --on-accent: #FFFFFF;
@@ -74,6 +74,7 @@
   --skin-soft: #1C1E45;
   --fg: #E6E8F5;
   --muted: #B3B6CC;
+  --label: #9A9DB5;
   --line: rgba(230, 232, 245, 0.12);
   --control: #8A8DA8;
   --accent: #A5B4FC;       /* light indigo for links and outlines on dark */
@@ -100,7 +101,8 @@
 
 @layer base {
   html { scroll-behavior: smooth; }
-  body { @apply bg-paper font-sans text-ink antialiased; transition: background-color 0.3s, color 0.3s; }
+  body { @apply bg-paper font-sans text-ink antialiased; font-size: 16px; font-weight: 400; line-height: 26px; transition: background-color 0.3s, color 0.3s; }
+  *, ::before, ::after { border-color: var(--line); }
   :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
   main:focus { outline: none; }
   ::selection { background: var(--accent); color: var(--on-accent); }
@@ -121,7 +123,7 @@
   /* Section surfaces: base, alternate, and the purple band. */
   .tone-base { background: var(--bg); color: var(--fg); }
   .tone-alt { background: var(--bg-alt); color: var(--fg); }
-  .tone-accent { --heading: #FFFFFF; --heading-hl: var(--band-hl-b); --hl-a: var(--band-hl-a); --hl-b: var(--band-hl-b); background: var(--band); color: #F5F6FF; --muted: rgba(245, 246, 255, 0.85); --line: rgba(245, 246, 255, 0.3); --focus: #FFFFFF; }
+  .tone-accent { --heading: #FFFFFF; --heading-hl: var(--band-hl-b); --hl-a: var(--band-hl-a); --hl-b: var(--band-hl-b); background: var(--band); color: #F5F6FF; --muted: rgba(245, 246, 255, 0.85); --label: rgba(245, 246, 255, 0.7); --line: rgba(245, 246, 255, 0.3); --focus: #FFFFFF; }
 
   /* Carousel track: starts on the page margin, runs to the screen edge, scrollbar hidden (buttons and dots replace it). */
   .carousel-track {
@@ -141,8 +143,8 @@
   .section-pad { padding-block: clamp(4.5rem, 9vw, 8.5rem); }
 
   /* Headings. Sizes come from the type-scale tokens; lines are balanced so headings break evenly. */
-  .display { font-family: var(--font-display); font-weight: 800; color: var(--heading); letter-spacing: -0.02em; line-height: 1.08; text-wrap: balance; }
-  .h-hero { font-size: var(--text-hero); font-weight: 900; }
+  .display { font-family: var(--font-display); font-weight: 600; color: var(--heading); letter-spacing: -0.02em; line-height: 1.08; text-wrap: balance; }
+  .h-hero { font-size: var(--text-hero); font-weight: 600; }
   /* The one highlighted word in a heading (written as *word* in the text). */
   .hl { color: var(--heading-hl); background-image: linear-gradient(120deg, var(--hl-a), var(--hl-b)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   @media (forced-colors: active) { .hl { -webkit-text-fill-color: currentColor; background: none; } }
@@ -152,7 +154,9 @@
   .h-page { font-size: var(--text-page); }
   .h-section { font-size: var(--text-section); }
   .h-item { font-size: var(--text-item); line-height: 1.15; }
-  .lede { font-size: var(--text-lede); line-height: 1.6; }
+  .lede { font-size: 16px; font-weight: 400; line-height: 26px; }
+  /* Small uppercase label above a heading. */
+  .eyebrow { font-size: 13px; font-weight: 700; line-height: 19px; letter-spacing: 1.75px; text-transform: uppercase; color: var(--label); }
 
   .btn {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold no-underline;
@@ -236,18 +240,6 @@
   .orb { position: absolute; border-radius: 999px; filter: blur(60px); pointer-events: none; animation: orb-drift 12s ease-in-out infinite; }
   [data-theme='dark'] .orb { opacity: 0.1 !important; }
 
-  /* Glowing integrations grid (StackGrid): each tile lights the part of its edge nearest the pointer
-     (--x / --y are set per tile), plus a faint inner glow. */
-  .glow-tile { position: relative; isolation: isolate; background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(255, 255, 255, 0.08); }
-  .glow-tile::before, .glow-tile::after { content: ''; position: absolute; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.4s; }
-  .glow-tile::before {
-    inset: -1px; padding: 1px; z-index: 1;
-    background: radial-gradient(220px circle at var(--x, -999px) var(--y, -999px), rgba(125, 211, 252, 0.95), rgba(165, 180, 252, 0.5) 35%, transparent 70%);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
-    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  }
-  .glow-tile::after { inset: 0; z-index: -1; background: radial-gradient(260px circle at var(--x, -999px) var(--y, -999px), rgba(99, 102, 241, 0.22), transparent 65%); }
-  .glow-grid:hover .glow-tile::before, .glow-grid:hover .glow-tile::after { opacity: 1; }
 
   /* Custom cursor (PointerEffects): the dot and ring replace the system cursor, except in text fields. */
   html.has-custom-cursor, html.has-custom-cursor * { cursor: none !important; }

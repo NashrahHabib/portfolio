@@ -156,7 +156,7 @@ export default function WorkViewer({ projects }: { projects: Project[] }) {
       <div className="container-site relative grid h-full items-center gap-10 pb-16 pt-8 lg:grid-cols-12 lg:gap-8 lg:pb-28 lg:pt-0">
         {/* Phone and tablet heading */}
         <div className="lg:hidden">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted">Portfolio</p>
+          <p className="eyebrow">Portfolio</p>
           <p className="display h-page mt-2">Selected <span className="hl">Work</span></p>
         </div>
 
@@ -168,7 +168,7 @@ export default function WorkViewer({ projects }: { projects: Project[] }) {
               <AnimatePresence mode="wait" initial={false}>
                 <motion.dd
                   key={`${p.id}-${k}`}
-                  className="mt-0.5 font-bold"
+                  className="mt-0.5 font-semibold"
                   initial={{ y: '110%', opacity: 0 }}
                   animate={{ y: '0%', opacity: 1 }}
                   exit={{ y: '-110%', opacity: 0 }}
@@ -245,7 +245,7 @@ export default function WorkViewer({ projects }: { projects: Project[] }) {
           <AnimatePresence mode="wait" initial={false}>
             <motion.p
               key={p.id}
-              className="lede font-semibold lg:text-right"
+              className="lede lg:text-right"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}

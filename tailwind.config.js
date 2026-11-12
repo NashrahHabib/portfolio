@@ -21,6 +21,7 @@ export default {
       fontFamily: { sans: ['var(--font-body)'], display: ['var(--font-display)'] },
       borderRadius: { box: 'var(--radius)', panel: 'var(--radius-lg)', btn: 'var(--radius-btn)', input: 'var(--radius-sm)' },
       maxWidth: { site: '80rem' }, // 1280px
+      fontSize: { base: ['16px', '26px'] }, // body text size, used globally
     },
   },
   plugins: [],

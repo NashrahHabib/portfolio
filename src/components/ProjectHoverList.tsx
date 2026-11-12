@@ -65,12 +65,12 @@ export default function ProjectHoverList({ projects }: { projects: Project[] }) 
                   onFocus={() => setActive(i)}
                   onBlur={() => setActive(null)}
                 >
-                  <span className={`display block text-[clamp(2.4rem,6.4vw,6rem)] leading-[1.02] transition-opacity duration-500 ${dim ? 'opacity-[0.08]' : 'opacity-[0.16]'}`}>
+                  <span className={`display block text-[clamp(2rem,4.8vw,4.5rem)] !font-semibold leading-[1.05] transition-opacity duration-500 ${dim ? 'opacity-[0.08]' : 'opacity-[0.16]'}`}>
                     {p.name}
                   </span>
                   <span
                     aria-hidden="true"
-                    className="display hl absolute inset-0 block text-[clamp(2.4rem,6.4vw,6rem)] leading-[1.02] transition-[clip-path] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
+                    className="display hl absolute inset-0 block text-[clamp(2rem,4.8vw,4.5rem)] !font-semibold leading-[1.05] transition-[clip-path] duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
                     style={{ clipPath: on ? 'inset(0 0 0 0)' : 'inset(0 100% 0 0)' }}
                   >
                     {p.name}

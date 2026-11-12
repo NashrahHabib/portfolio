@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from 'lucide-react';
 import { displayUrl, findProject, neighbours, visitLabel } from '../lib/projects';
 import { useSeo } from '../lib/seo';
 import ProjectFrame from '../components/ProjectFrame';
+import ProjectsDisclaimer from '../components/ProjectsDisclaimer';
 import NotFound from './NotFound';
 
 export default function ProjectDetail() {
@@ -59,7 +60,7 @@ function Detail({ project }: { project: NonNullable<ReturnType<typeof findProjec
             {project.company && (
               <div>
                 <dt className="label">Delivered with</dt>
-                <dd className="mt-1 inline-flex items-center gap-2 font-bold">
+                <dd className="mt-1 inline-flex items-center gap-2 font-semibold">
                   <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-[color:var(--pop)]" />
                   {project.company === 'Freelance' ? 'Freelance project' : project.company}
                 </dd>
@@ -116,6 +117,7 @@ function Detail({ project }: { project: NonNullable<ReturnType<typeof findProjec
           </Link>
         </div>
       </nav>
+      <ProjectsDisclaimer className="pb-16" />
     </article>
   );
 }

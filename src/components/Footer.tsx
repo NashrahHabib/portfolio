@@ -31,9 +31,9 @@ export default function Footer() {
 
   return (
     <footer className="grain relative overflow-hidden bg-[color:var(--band-deep)] text-[#F5F6FF] [--heading:#FFFFFF]">
-      <div className="container-site grid gap-10 pt-16 md:grid-cols-12 md:items-start md:pt-20">
+      <div className="container-site flex flex-col gap-10 pt-16 lg:flex-row lg:items-start lg:justify-between lg:pt-20">
         {/* Name and availability */}
-        <div className="md:col-span-4">
+        <div>
           <Link to="/" className="inline-flex items-center gap-3 no-underline" aria-label={`${site.name}, home`}>
             <span aria-hidden="true" className="display grid h-10 w-10 place-items-center rounded-input bg-accent text-base text-white">NH</span>
             <span className="display text-xl">{site.name}</span>
@@ -48,8 +48,8 @@ export default function Footer() {
         </div>
 
         {/* Pages on one line */}
-        <nav aria-label="Footer" className="md:col-span-4">
-          <ul className="flex flex-wrap gap-x-6 gap-y-2 font-semibold">
+        <nav aria-label="Footer">
+          <ul className="flex flex-wrap gap-x-4 gap-y-2 font-semibold sm:gap-x-6 lg:flex-nowrap lg:whitespace-nowrap">
             {nav.map((item) => (
               <li key={item.to}><Link to={item.to} className={link}>{item.label}</Link></li>
             ))}
@@ -57,7 +57,7 @@ export default function Footer() {
         </nav>
 
         {/* Contact */}
-        <div className="space-y-2 md:col-span-4 md:text-right">
+        <div className="space-y-2 lg:text-right">
           <a href={`mailto:${site.email}`} className={`${link} font-semibold [overflow-wrap:anywhere]`}>{site.email}</a>
           <p>
             <a className={`${link} inline-flex items-center gap-1`} href={site.linkedin} target="_blank" rel="noopener noreferrer">
@@ -76,7 +76,7 @@ export default function Footer() {
       </div>
 
       {/* Giant wordmark: letters rise in one by one and lift on hover; the bottom is cut off by the edge. */}
-      <div aria-hidden="true" className="mt-6 h-[0.8em] select-none overflow-hidden px-[1.5vw] text-[12.6vw] leading-none opacity-[0.14] transition-opacity duration-500 hover:opacity-[0.3]">
+      <div aria-hidden="true" className="mt-6 select-none overflow-hidden px-[1.5vw] pb-[2.5vw] text-[12.6vw] leading-none opacity-[0.14] transition-opacity duration-500 hover:opacity-[0.3]">
         {/* The line itself is watched (the letters start hidden below it, so they can't be). */}
         <motion.p
           className="display flex justify-between whitespace-nowrap leading-[1] tracking-[-0.03em]"

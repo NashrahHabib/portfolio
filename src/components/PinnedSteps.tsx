@@ -80,7 +80,7 @@ export default function PinnedSteps({
         {/* Pinned side (large screens) */}
         <div className="pt-20 lg:sticky lg:top-0 lg:col-span-6 lg:flex lg:h-screen lg:flex-col lg:justify-between lg:py-24">
           <div>
-            <p className={`flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] ${highlight}`}>
+            <p className={`eyebrow flex items-center gap-3 ${onDark ? "[--label:rgba(245,246,255,0.7)]" : ""}`}>
               <span aria-hidden="true" className="h-px w-8 bg-current" /> {eyebrow}
             </p>
             <SplitText id={`${id}-title`} text={title} className="display h-page mt-5" />

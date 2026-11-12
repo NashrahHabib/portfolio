@@ -64,7 +64,7 @@ export default function HeroOrbit({ delay = 0 }: { delay?: number }) {
 
       {/* Portrait */}
       {/* Ring and photo share one square box, so both are perfect, concentric circles. */}
-      <div className="absolute left-1/2 top-1/2 aspect-square w-[40%] -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute left-1/2 top-1/2 aspect-square w-[48%] -translate-x-1/2 -translate-y-1/2">
         <span
           aria-hidden="true"
           className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,var(--grad-a),var(--grad-b),#38BDF8,var(--grad-b),var(--grad-a))] shadow-card [animation:orbit-spin_8s_linear_infinite] motion-reduce:animate-none"
